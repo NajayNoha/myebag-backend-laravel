@@ -15,9 +15,8 @@ class CategoryController extends Controller
             $d = Category::all();
             return response()->json([
                 'status' => true,
-                'code' => 200,
                 'data' => $d,
-            ]);
+            ], 200);
         }catch(\Throwable $e){
             return $e->getMessage();
         }
@@ -35,7 +34,7 @@ class CategoryController extends Controller
             if ($validateCategory->fails()){
                 return response()->json([
                     'errors' => $validateCategory->errors()
-                ]);
+                ], 401);
             }
             $category = Category::create([
                 "name"=>$request->name,
@@ -44,10 +43,9 @@ class CategoryController extends Controller
             ]);
             return response()->json([
                 'status' => true,
-                'code' => 200,
                 'message' => 'Successfully Created',
                 'data' => $category,
-            ]);
+            ], 200);
         }catch(\Throwable $e){
             return $e->getMessage();
         }
@@ -62,10 +60,9 @@ class CategoryController extends Controller
             $category->save();
             return response()->json([
                 'status' => true,
-                'code' => 200,
                 'message' => 'Successfully Updated',
                 'data' => $category,
-            ]);
+            ], 200);
         }catch(\Throwable $e){
             return $e->getMessage();
         }
@@ -77,10 +74,10 @@ class CategoryController extends Controller
             $category->delete();
             return response()->json([
                 'status' => true,
-                'code' => 200,
                 'message' => 'Successfully Deleted'
-            ]);
+            ], 200);
         }catch(\Throwable $e){
             return $e->getMessage();
-        }    }
+        }    
+    }
 }
