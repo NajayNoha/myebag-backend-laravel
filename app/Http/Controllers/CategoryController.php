@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    //
-    public function show($id) {
+    public function index() {
         try{
-            // $d = Category::findOrFail($id);
             $categories = Category::all();
             return response()->json([
                 'status' => true,
@@ -31,8 +29,37 @@ class CategoryController extends Controller
             );
         }
     }
+
+    public function show($id) {
+        try{
+            $category = Category::find($id);
+            if (!isset($category)){
+                return response()->json([
+                    'status' => false,
+                    'code' => 'NOT_FOUND',
+                    'message' => 'Category Does Not Exist'
+                ], 404);
+            }
+            return response()->json([
+                'status' => true,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'category' => $category
+                ],
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
     
-    public function create(Request $request) {
+    public function store(Request $request) {
         try{
             $validateCategory = Validator::make($request->all(),
             [
@@ -45,7 +72,7 @@ class CategoryController extends Controller
                 return response()->json([
                     'status' => false,
                     'code' => 'VALIDATION_ERROR',
-                    'message' => $validateCategory->errors()
+                    'errors' => $validateCategory->errors()
                 ], 405);
             }
             $category = Category::create([
@@ -74,7 +101,14 @@ class CategoryController extends Controller
 
     public function edit(Request $request, $id) {
         try{
-            $category = Category::findOrFail($id);
+            $category = Category::find($id);
+            if (!isset($category)){
+                return response()->json([
+                    'status' => false,
+                    'code' => 'NOT_FOUND',
+                    'message' => 'Category Does Not Exist'
+                ], 404);
+            }
             $category->name = $request->name;
             $category->description = $request->description;
             $category->image = $request->image;
@@ -100,7 +134,14 @@ class CategoryController extends Controller
 
     public function destroy(Request $request, $id) {
         try{
-            $category = Category::findOrFail($id);
+            $category = Category::find($id);
+            if (!isset($category)){
+                return response()->json([
+                    'status' => false,
+                    'code' => 'NOT_FOUND',
+                    'message' => 'Category Does Not Exist'
+                ], 404);
+            }
             $category->delete();
             return response()->json([
                 'status' => true,
