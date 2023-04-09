@@ -12,13 +12,23 @@ class CategoryController extends Controller
     public function show($id) {
         try{
             // $d = Category::findOrFail($id);
-            $d = Category::all();
+            $categories = Category::all();
             return response()->json([
                 'status' => true,
-                'data' => $d,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'categories' => $categories
+                ],
             ], 200);
-        }catch(\Throwable $e){
-            return $e->getMessage();
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
         }
     }
     
@@ -33,8 +43,10 @@ class CategoryController extends Controller
 
             if ($validateCategory->fails()){
                 return response()->json([
-                    'errors' => $validateCategory->errors()
-                ], 401);
+                    'status' => false,
+                    'code' => 'VALIDATION_ERROR',
+                    'message' => $validateCategory->errors()
+                ], 405);
             }
             $category = Category::create([
                 "name"=>$request->name,
@@ -43,11 +55,20 @@ class CategoryController extends Controller
             ]);
             return response()->json([
                 'status' => true,
-                'message' => 'Successfully Created',
-                'data' => $category,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'category' => $category,
+                    ]
             ], 200);
-        }catch(\Throwable $e){
-            return $e->getMessage();
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
         }
     }
 
@@ -60,11 +81,20 @@ class CategoryController extends Controller
             $category->save();
             return response()->json([
                 'status' => true,
-                'message' => 'Successfully Updated',
-                'data' => $category,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'category' => $category
+                ]
             ], 200);
-        }catch(\Throwable $e){
-            return $e->getMessage();
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
         }
     }
 
@@ -74,10 +104,20 @@ class CategoryController extends Controller
             $category->delete();
             return response()->json([
                 'status' => true,
-                'message' => 'Successfully Deleted'
+                'code' => 'SUCCESS',
+                'data' => [
+                    'category' => $category
+                ]
             ], 200);
-        }catch(\Throwable $e){
-            return $e->getMessage();
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
         }    
     }
 }
