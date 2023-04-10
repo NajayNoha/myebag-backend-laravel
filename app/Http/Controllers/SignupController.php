@@ -16,14 +16,13 @@ class SignupController extends Controller
                 'firstname' => 'required',
                 'lastname' => 'required',
                 'password' => 'required',
-                'telephone'=> 'required',
                 'email' => 'required|email|unique:user,email'
             ]);
             if ($validatedData->fails()) {
                 return response()->json([
                     'status' => false,
                     'code' => 'VALIDATION_ERROR',
-                    'message' => 'User Already exist'
+                    'errors' => $validatedData->errors()
                 ], 405);
             }
             $user = User::create([
@@ -33,11 +32,21 @@ class SignupController extends Controller
                 "telephone"=> $request->telephone,
                 "password"=>Hash::make($request->password)
             ]);
-            $token = $user->createToken("API_TOKEN")->plainTextToken;
-            return $token;
-
-        }catch(\PDOException $e){
-            return $e->getMessage();
+            return response()->json([
+                'status' => true,
+                'code'=> 'SUCCESS',
+                'message' => 'SignedUp In Successfully',
+                'data'=> ['user' => $user],
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
         }
     }
 
