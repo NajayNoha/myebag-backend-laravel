@@ -11,29 +11,34 @@ class SignupController extends Controller
 {
     public function register(Request $request)
     {
-        $validatedData = Validator::make($request->all(), [
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'password' => 'required',
-            'telephone'=> 'required',
-            'email' => 'required|email|unique:user,email'
-        ]);
-
-        if($validatedData->fails()) {
-            return response()->json([
-                'status' => false,
-                'code' => '',
-                'data' => $validatedData->errors()
+        try{
+            $validatedData = Validator::make($request->all(), [
+                'firstname' => 'required',
+                'lastname' => 'required',
+                'password' => 'required',
+                'telephone'=> 'required',
+                'email' => 'required|email|unique:user,email'
             ]);
+            if ($validatedData->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'code' => 405,
+                    'data' => $validatedData->errors()
+                ]);
+            }
+            $user = User::create([
+                "firstname"=>$request->firstname,
+                "lastname"=>$request->lastname,
+                "email"=>$request->email,
+                "telephone"=> $request->telephone,
+                "password"=>Hash::make($request->password)
+            ]);
+            $token = $user->createToken("API_TOKEN")->plainTextToken;
+            return $token;
+
+        }catch(\PDOException $e){
+            return $e->getMessage();
         }
-        $user = User::create([
-            "firstname"=>$request->firstname,
-            "lastname"=>$request->lastname,
-            "email"=>$request->email,
-            "password"=>Hash::make($request->password)
-        ]);
-        $token = $user->createToken("API_TOKEN")->plainTextToken;
-        return $token;
     }
 
 }
