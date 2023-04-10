@@ -27,7 +27,7 @@ class LoginController extends Controller
             ], 401);
         }
 
-        
+
         if(!Auth::attempt($request->only(['email', 'password']))){
             return response()->json([
                 'status' => false,
@@ -36,20 +36,23 @@ class LoginController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
-        // $is_admin = User::select('is_admin')->where('email', $request->email)->get();
 
         return response()->json([
             'status' => true,
+            'code'=> 'SUCCESS',
             'message' => 'Logged In Successfully',
-            'user' => $user,
-            'token' => $user->createToken("API_TOKEN")->plainTextToken
+            'data'=> ['user' => $user]
         ], 200);
 
-    } catch (\Throwable $e) {
-        return response()->json([
-            'status' => false,
-            'message' => $e->getMessage()
-        ], 500);
+    } catch (\Throwable $th) {
+        return response()->json(
+            [
+                'status' => false,
+                'message' => $th->getMessage(),
+                'code' => 'SERVER_ERROR'
+            ],
+            500
+        );
     }
 }
 

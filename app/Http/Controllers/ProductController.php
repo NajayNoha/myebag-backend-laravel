@@ -12,7 +12,11 @@ class ProductController extends Controller
     {
         $validateProduct = Validator::make($request, [
             'name'=>'required',
-            'sku'=>'required|unique:products,sku'
+            'sku'=>'required|unique:products,sku',
+            'description'=>'required',
+            'category_id'=> 'required',
+            // ''=>,
+            // ''=>,
         ]);
         $product = new Product();
         $product->name = $request->name;

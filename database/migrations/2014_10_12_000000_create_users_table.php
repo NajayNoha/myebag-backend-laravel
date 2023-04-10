@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('telephone');
+            $table->string('telephone')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_active')->default(true);
             $table->date('last_action')->nullable();
