@@ -22,9 +22,9 @@ class SignupController extends Controller
             if ($validatedData->fails()) {
                 return response()->json([
                     'status' => false,
-                    'code' => 405,
-                    'data' => $validatedData->errors()
-                ]);
+                    'code' => 'FAILED',
+                    'message' => 'User Already exist'
+                ], 404);
             }
             $user = User::create([
                 "firstname"=>$request->firstname,
