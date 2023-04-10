@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('featured_products', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('category_id')->constrained('categories');
-            $table->primary(['product_id', 'category_id']);
             $table->timestamps();
         });
     }

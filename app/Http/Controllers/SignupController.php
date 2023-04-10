@@ -15,12 +15,15 @@ class SignupController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'password' => 'required',
-            'email' => 'required|email|unique:user,email,except,id'
+            'telephone'=> 'required',
+            'email' => 'required|email|unique:user,email'
         ]);
 
         if($validatedData->fails()) {
             return response()->json([
-                'errors' => $validatedData->errors()
+                'status' => false,
+                'code' => '',
+                'data' => $validatedData->errors()
             ]);
         }
         $user = User::create([
