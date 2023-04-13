@@ -22,7 +22,8 @@ class SignupController extends Controller
                 return response()->json([
                     'status' => false,
                     'code' => 'VALIDATION_ERROR',
-                    'errors' => $validatedData->errors()
+                    'errors' => $validatedData->errors(),
+                    'message' => 'User Already exist'
                 ], 405);
             }
             $user = User::create([
