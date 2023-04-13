@@ -62,9 +62,6 @@ class CategoryController extends Controller
 
     public function store(Request $request) {
         try{
-
-
-
             $validateCategory = Validator::make($request->all(),
             [
                 'name' => 'required',
@@ -95,13 +92,14 @@ class CategoryController extends Controller
             // generate unique name
             $image_name = substr(Str::slug($request->name), 0, 20) . '-' . uniqid() . '.' . $extention;
             // store file to images/categories/image_name
-            $path = '/images/categories/' . $image_name;
-            $request->file('image')->move(public_path() . $path);
+            $fullPath = '/images/categories/' . $image_name;
+            $storePath = '/images/categories/';
+            $request->file('image')->move(public_path() . $storePath, $image_name);
 
             $category = Category::create([
                 "name"=>$request->name,
                 "description"=>$request->description,
-                "image"=>$path
+                "image"=>$fullPath
             ]);
 
             return response()->json([
