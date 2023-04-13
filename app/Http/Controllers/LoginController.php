@@ -22,16 +22,18 @@ class LoginController extends Controller
         if($validateUser->fails()){
             return response()->json([
                 'status' => false,
+                'code' => 'VALIDATION_ERROR',
                 'message' => 'validation error',
                 'errors' => $validateUser->errors()
-            ], 401);
+            ], 405);
         }
 
 
         if(!Auth::attempt($request->only(['email', 'password']))){
             return response()->json([
                 'status' => false,
-                'message' => 'Email & Password does not exist.',
+                'message' => __('auth.failed'),
+                'code' => 'INVALID_CREDENTIALS'
             ], 401);
         }
 

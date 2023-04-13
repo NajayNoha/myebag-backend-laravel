@@ -16,7 +16,7 @@ class SignupController extends Controller
                 'firstname' => 'required',
                 'lastname' => 'required',
                 'password' => 'required',
-                'email' => 'required|email|unique:user,email'
+                'email' => 'required|email|unique:users,email'
             ]);
             if ($validatedData->fails()) {
                 return response()->json([
