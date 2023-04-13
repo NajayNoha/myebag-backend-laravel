@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -58,14 +59,17 @@ class CategoryController extends Controller
             );
         }
     }
-    
+
     public function store(Request $request) {
         try{
+
+
+
             $validateCategory = Validator::make($request->all(),
             [
                 'name' => 'required',
                 'description' => 'required',
-                'image' => 'required'
+                'image' => 'required|mimes:jpg,png,webp,jpeg|max:5048'
             ]);
 
             if ($validateCategory->fails()){
@@ -75,11 +79,31 @@ class CategoryController extends Controller
                     'errors' => $validateCategory->errors()
                 ], 405);
             }
+
+            if(!$request->has('image')) {
+                return response()->json([
+                    'status' => true,
+                    'code' => 'VALIDATION_ERROR',
+                    'errors' => [
+                        'image' => 'Image not uploaded'
+                    ]
+                ], 405);
+            }
+
+            // get extension
+            $extention = $request->file('image')->getClientOriginalExtension();
+            // generate unique name
+            $image_name = substr(Str::slug($request->name), 0, 20) . '-' . uniqid() . '.' . $extention;
+            // store file to images/categories/image_name
+            $path = '/images/categories/' . $image_name;
+            $request->file('image')->move(public_path() . $path);
+
             $category = Category::create([
                 "name"=>$request->name,
                 "description"=>$request->description,
-                "image"=>$request->image
+                "image"=>$path
             ]);
+
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
@@ -159,6 +183,6 @@ class CategoryController extends Controller
                 ],
                 500
             );
-        }    
+        }
     }
 }
