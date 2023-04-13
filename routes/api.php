@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
@@ -43,6 +44,12 @@ Route::post("/users/{id}", [UserController::class, "edit"]);
 Route::delete("/users/{id}", [UserController::class, "destroy"]);
 
 
-Route::post("/orders", [OrderController::class, "store"]);
 Route::get("/orders", [OrderController::class, "index"]);
 Route::get("/orders/{id}", [OrderController::class, "show"]);
+Route::post("/orders", [OrderController::class, "store"]);
+
+
+Route::get("/carts", [CartController::class, "index"]);
+Route::get("/carts/{id}", [CartController::class, "show"]);
+Route::post("/carts", [CartController::class, "store"]);
+Route::delete("/carts/{id}", [CartController::class, "destroy"]);
