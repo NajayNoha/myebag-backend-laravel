@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('sku');
             $table->string('description');
-            $table->string('size_system');
-            $table->string('gender')->default('both');
+            $table->integer('stock_alert');
+            $table->string('gender')->default('mix');
             $table->foreignId('category_id')->constrained('categories');
-            $table->foreignId('discount_id')->constrained();
+            $table->unsignedBigInteger('discount_id');
             $table->timestamps();
         });
     }

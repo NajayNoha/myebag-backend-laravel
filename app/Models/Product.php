@@ -13,7 +13,6 @@ class Product extends Model
         'sku',
         'description',
         'category_id',
-        'size_system',
         'gender',
         'discount_id',
     ];
