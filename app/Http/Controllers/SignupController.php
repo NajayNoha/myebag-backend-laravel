@@ -16,7 +16,7 @@ class SignupController extends Controller
                 'firstname' => 'required',
                 'lastname' => 'required',
                 'password' => 'required',
-                'email' => 'required|email|unique:user,email'
+                'email' => 'required|email|unique:users,email'
             ]);
             if ($validatedData->fails()) {
                 return response()->json([
@@ -29,8 +29,7 @@ class SignupController extends Controller
                 "firstname"=>$request->firstname,
                 "lastname"=>$request->lastname,
                 "email"=>$request->email,
-                "telephone"=> $request->telephone,
-                "password"=>Hash::make($request->password)
+                "telephone"=> $request->telephone,                "password"=>Hash::make($request->password)
             ]);
             return response()->json([
                 'status' => true,

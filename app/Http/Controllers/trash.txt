@@ -1,0 +1,49 @@
+// $ob = [
+            //     'id'=> '',
+            //     'name' => '',
+            //     'sku'=> '',
+            //     'description'=> '',
+            //     'category_id' => 1,
+            //     'discount_id'=> 1 ,
+            //     'size_type_id'=> 1 ,
+            //     'images'=> [
+            //         [
+            //             'id'=>1, 'order'=>2, 'path'=>'/images/smt'
+            //         ],
+            //         []
+            //     ],
+            //     'stock_alert'=> 10,
+            //     'product_variations'=> [
+            //         [
+            //             'id'=>'',
+            //             'product_id'=> 1,
+            //             'size_id' => 1 ,
+            //             'color_id'=> 3,
+            //             'quantity'=>10 ,
+            //             'price' => 200 ,
+            //         ]
+            //     ]
+
+
+
+
+            $pro = [];
+                $pro['name'] = $product->name;
+                $pro['sku'] = $product->sku;
+                $pro['description'] = $product->description;
+                $pro['stock_alert'] = $product->stock_alert;
+                $pro['gender'] = $product->gender;
+                $pro['price'] = $product->price;
+                $pro['category'] = Category::select('name')->where('id', $product->category_id)->first()->name;
+                $pro['discount'] = Discount::select('name')->where('id', $product->discount_id)->first()->name ? Discount::select('name')->where('id', $product->discount_id)->first()->name : null ;
+                $pro['color'] = Color::select('name')->where('id', $product->color_id)->first()->name;
+                $pro['color_hex'] = Color::select('hex_code')->where('id', $product->color_id)->first()->hex_code;
+                $pro['size'] = Size::select('value')->where('id', $product->size_id)->get()->first()->value;
+                $size_sys =  Size::select('size_type_id')->where('id', $product->size_id)->get()->first()->size_type_id;
+                $pro['size_system'] = SizeType::where('id', $size_sys)->get()->first()->name;
+                array_push($data, $pro);
+
+
+
+            // $product->category_id = Category::select('id')->where('name', $request->category)->get()->first()->id;
+            // $product->discount_id = Discount::select('id')->where('name', $request->discount)->get()->first()->id;
