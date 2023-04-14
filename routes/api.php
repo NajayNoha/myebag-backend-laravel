@@ -6,6 +6,8 @@ use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\UserAdressController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -53,3 +55,17 @@ Route::get("/carts", [CartController::class, "index"]);
 Route::get("/carts/{id}", [CartController::class, "show"]);
 Route::post("/carts", [CartController::class, "store"]);
 Route::delete("/carts/{id}", [CartController::class, "destroy"]);
+
+
+Route::get("/useradresses", [UserAdressController::class, "index"]);
+Route::get("/useradresses/{id}", [UserAdressController::class, "show"]);
+Route::post("/useradresses", [UserAdressController::class, "store"]);
+Route::post("/useradresses/{id}", [UserAdressController::class, "edit"]);
+Route::delete("/useradresses/{id}", [UserAdressController::class, "destroy"]);
+
+
+Route::get("/reviews", [ReviewsController::class, "index"]);
+Route::get("/reviews/{id}", [ReviewsController::class, "show"]);
+Route::post("/reviews", [ReviewsController::class, "store"]);
+Route::post("/reviews/{id}", [ReviewsController::class, "edit"]);
+Route::delete("/reviews/{id}", [ReviewsController::class, "destroy"]);
