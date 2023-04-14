@@ -54,12 +54,12 @@ Route::delete("/sizes/{id}", [SizeController::class, "destroy"]);
 
 Route::get("/products", [ProductController::class, "index"]);
 Route::get("/products/{id}", [ProductController::class, "show"]);
-Route::post("/product", [ProductController::class, "store"]);
+Route::post("/products", [ProductController::class, "store"]);
 Route::post("/products/{id}", [ProductController::class, "edit"]);
 Route::delete("/product/{id}", [ProductController::class, "destroy"]);
 
 Route::get("/colors", [ColorController::class, "index"]);
 Route::get("/colors/{id}", [ColorController::class, "show"]);
-Route::post("/color", [ColorController::class, "store"]);
+Route::post("/colors", [ColorController::class, "store"]);
 Route::post("/colors/{id}", [ColorController::class, "edit"]);
 Route::delete("/colors/{id}", [ColorController::class, "destroy"]);
