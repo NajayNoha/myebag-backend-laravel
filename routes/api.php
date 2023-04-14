@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -69,3 +70,10 @@ Route::get("/reviews/{id}", [ReviewsController::class, "show"]);
 Route::post("/reviews", [ReviewsController::class, "store"]);
 Route::post("/reviews/{id}", [ReviewsController::class, "edit"]);
 Route::delete("/reviews/{id}", [ReviewsController::class, "destroy"]);
+
+
+Route::get("/discounts", [DiscountController::class, "index"]);
+Route::get("/discounts/{id}", [DiscountController::class, "show"]);
+Route::post("/discounts", [DiscountController::class, "store"]);
+Route::post("/discounts/{id}", [DiscountController::class, "edit"]);
+Route::delete("/discounts/{id}", [DiscountController::class, "destroy"]);

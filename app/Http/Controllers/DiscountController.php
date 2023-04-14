@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Review;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ReviewsController extends Controller
+class DiscountController extends Controller
 {
     public function index() {
         try{
-            $review = Review::all();
+            $discount = Discount::all();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'review' => $review
+                    'discount' => $discount
                     ]
             ], 200);
         }catch(\Throwable $th){
@@ -31,19 +31,19 @@ class ReviewsController extends Controller
     }
     public function show($id) {
         try{
-            $review = Review::find($id);
-            if (!isset($review)){
+            $discount = Discount::find($id);
+            if (!isset($discount)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'User Does Not Exist'
+                    'message' => 'Discount Does Not Exist'
                 ], 404);
             }
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'review' => $review
+                    'discount' => $discount
                 ]
             ], 200);
         }catch(\Throwable $th){
@@ -60,32 +60,31 @@ class ReviewsController extends Controller
 
     public function store(Request $request) {
         try{
-            $validateReview = Validator::make($request->all(),
+            $validateDiscount = Validator::make($request->all(),
             [
-                'product_id' => 'required',
-                'user_id' => 'required',
-                'rating' => 'required',
+                'name' => 'required',
+                'description' => 'required',
+                'discount_percent' => 'required',
             ]);
 
-            if ($validateReview->fails()){
+            if ($validateDiscount->fails()){
                 return response()->json([
                     'status' => false,
                     'code' => 'VALIDATION_ERROR',
-                    'errors' => $validateReview->errors()
+                    'errors' => $validateDiscount->errors()
                 ], 405);
             }
-            $review = Review::create([
-                "product_id"=>$request->product_id,
-                "user_id"=>$request->user_id,
-                "rating"=>$request->rating,
-                "body"=>$request->body,
-                "approved"=>$request->approved,
+            $discount = Discount::create([
+                "name"=>$request->name,
+                "description"=>$request->description,
+                "discount_percent"=>$request->discount_percent,
+                "active"=>$request->active,
             ]);
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'review' => $review,
+                    'discount' => $discount,
                     ]
             ], 200);
         }catch(\Throwable $th){
@@ -102,25 +101,24 @@ class ReviewsController extends Controller
 
     public function edit(Request $request, $id) {
         try{
-            $review = Review::find($id);
-            if (!isset($review)){
+            $discount = Discount::find($id);
+            if (!isset($discount)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'Review Does Not Exist'
+                    'message' => 'Discount Does Not Exist'
                 ], 404);
             }
-            $review->user_id = $request->user_id;
-            $review->product_id = $request->product_id;
-            $review->rating = $request->rating;
-            $review->body = $request->body;
-            $review->approved = $request->approved;
-            $review->save();
+            $discount->name = $request->name;
+            $discount->description = $request->description;
+            $discount->discount_percent = $request->discount_percent;
+            $discount->active = $request->active;
+            $discount->save();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'review' => $review
+                    'discount' => $discount
                 ]
             ], 200);
         }catch(\Throwable $th){
@@ -138,20 +136,20 @@ class ReviewsController extends Controller
 
     public function destroy(Request $request, $id) {
         try{
-            $review = Review::find($id);
-            if (!isset($review)){
+            $discount = Discount::find($id);
+            if (!isset($discount)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'Review Does Not Exist'
+                    'message' => 'Discount Does Not Exist'
                 ], 404);
             }
-            $review->delete();
+            $discount->delete();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'review' => $review
+                    'discount' => $discount
                 ]
             ], 200);
         }catch(\Throwable $th){
