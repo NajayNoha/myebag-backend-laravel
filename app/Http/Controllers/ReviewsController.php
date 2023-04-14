@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use Illuminate\Support\Str;
+use App\Models\Review;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class CategoryController extends Controller
+class ReviewsController extends Controller
 {
     public function index() {
         try{
-            $categories = Category::all();
+            $review = Review::all();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'categories' => $categories
-                ],
+                    'review' => $review
+                    ]
             ], 200);
         }catch(\Throwable $th){
             return response()->json(
@@ -31,23 +29,22 @@ class CategoryController extends Controller
             );
         }
     }
-
     public function show($id) {
         try{
-            $category = Category::find($id);
-            if (!isset($category)){
+            $review = Review::find($id);
+            if (!isset($review)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'Category Does Not Exist'
+                    'message' => 'User Does Not Exist'
                 ], 404);
             }
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category
-                ],
+                    'review' => $review
+                ]
             ], 200);
         }catch(\Throwable $th){
             return response()->json(
@@ -63,57 +60,32 @@ class CategoryController extends Controller
 
     public function store(Request $request) {
         try{
-            $validateCategory = Validator::make($request->all(),
+            $validateReview = Validator::make($request->all(),
             [
-                'name' => 'required',
-                'sku'=> 'required',
-                'description' => 'required',
-<<<<<<< HEAD
-                'size_system'=> 'required',
-                'gender'=> 'required',
-                'category' => 'required',
-                'discount'=> 'required',
-=======
-                'image' => 'required|mimes:jpg,png,webp,jpeg'
->>>>>>> d7fd8335b3b55eb4d82cd082ecaf3cd8206db08a
+                'product_id' => 'required',
+                'user_id' => 'required',
+                'rating' => 'required',
             ]);
 
-            if ($validateCategory->fails()){
+            if ($validateReview->fails()){
                 return response()->json([
                     'status' => false,
                     'code' => 'VALIDATION_ERROR',
-                    'errors' => $validateCategory->errors()
+                    'errors' => $validateReview->errors()
                 ], 405);
             }
-
-            // if(!$request->has('image')) {
-            //     return response()->json([
-            //         'status' => true,
-            //         'code' => 'VALIDATION_ERROR',
-            //         'errors' => [
-            //             'image' => 'Image not uploaded'
-            //         ]
-            //     ], 405);
-            // }
-
-            // get extension
-            $extention = $request->file('image')->getClientOriginalExtension();
-            // generate unique name
-            $image_name = substr(Str::slug($request->name), 0, 20) . '-' . uniqid() . '.' . $extention;
-            // store file to storage/images/categories/image_name
-            $path = Storage::disk('public')->putFileAs('images', $request->file('image'), $image_name);
-
-            $category = Category::create([
-                "name"=>$request->name,
-                "description"=>$request->description,
-                "image"=> 'storage/' . $path
+            $review = Review::create([
+                "product_id"=>$request->product_id,
+                "user_id"=>$request->user_id,
+                "rating"=>$request->rating,
+                "body"=>$request->body,
+                "approved"=>$request->approved,
             ]);
-
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category,
+                    'review' => $review,
                     ]
             ], 200);
         }catch(\Throwable $th){
@@ -130,23 +102,25 @@ class CategoryController extends Controller
 
     public function edit(Request $request, $id) {
         try{
-            $category = Category::find($id);
-            if (!isset($category)){
+            $review = Review::find($id);
+            if (!isset($review)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'Category Does Not Exist'
+                    'message' => 'Review Does Not Exist'
                 ], 404);
             }
-            $category->name = $request->name;
-            $category->description = $request->description;
-            $category->image = $request->image;
-            $category->save();
+            $review->user_id = $request->user_id;
+            $review->product_id = $request->product_id;
+            $review->rating = $request->rating;
+            $review->body = $request->body;
+            $review->approved = $request->approved;
+            $review->save();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category
+                    'review' => $review
                 ]
             ], 200);
         }catch(\Throwable $th){
@@ -161,22 +135,23 @@ class CategoryController extends Controller
         }
     }
 
+
     public function destroy(Request $request, $id) {
         try{
-            $category = Category::find($id);
-            if (!isset($category)){
+            $review = Review::find($id);
+            if (!isset($review)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'Category Does Not Exist'
+                    'message' => 'Review Does Not Exist'
                 ], 404);
             }
-            $category->delete();
+            $review->delete();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category
+                    'review' => $review
                 ]
             ], 200);
         }catch(\Throwable $th){
@@ -188,6 +163,6 @@ class CategoryController extends Controller
                 ],
                 500
             );
-        }
+        }    
     }
 }
