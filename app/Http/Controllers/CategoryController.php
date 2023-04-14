@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
@@ -66,7 +67,7 @@ class CategoryController extends Controller
             [
                 'name' => 'required',
                 'description' => 'required',
-                'image' => 'required|mimes:jpg,png,webp,jpeg|max:5048'
+                'image' => 'required|mimes:jpg,png,webp,jpeg'
             ]);
 
             if ($validateCategory->fails()){
@@ -77,29 +78,27 @@ class CategoryController extends Controller
                 ], 405);
             }
 
-            if(!$request->has('image')) {
-                return response()->json([
-                    'status' => true,
-                    'code' => 'VALIDATION_ERROR',
-                    'errors' => [
-                        'image' => 'Image not uploaded'
-                    ]
-                ], 405);
-            }
+            // if(!$request->has('image')) {
+            //     return response()->json([
+            //         'status' => true,
+            //         'code' => 'VALIDATION_ERROR',
+            //         'errors' => [
+            //             'image' => 'Image not uploaded'
+            //         ]
+            //     ], 405);
+            // }
 
             // get extension
             $extention = $request->file('image')->getClientOriginalExtension();
             // generate unique name
             $image_name = substr(Str::slug($request->name), 0, 20) . '-' . uniqid() . '.' . $extention;
-            // store file to images/categories/image_name
-            $fullPath = '/images/categories/' . $image_name;
-            $storePath = '/images/categories/';
-            $request->file('image')->move(public_path() . $storePath, $image_name);
+            // store file to storage/images/categories/image_name
+            $path = Storage::disk('public')->putFileAs('images', $request->file('image'), $image_name);
 
             $category = Category::create([
                 "name"=>$request->name,
                 "description"=>$request->description,
-                "image"=>$fullPath
+                "image"=> 'storage/' . $path
             ]);
 
             return response()->json([
