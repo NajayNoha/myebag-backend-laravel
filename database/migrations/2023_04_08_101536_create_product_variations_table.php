@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('size_id')->constrained('sizes');
-            $table->foreignId('color_id')->constrained('colors')->nullable();
+            $table->integer('color_id')->nullable();
             $table->integer('quantity')->default(0);
             $table->integer('price');
             $table->timestamps();

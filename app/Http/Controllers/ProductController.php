@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Color;
-use App\Models\Discount;
-use App\Models\Product;
-use App\Models\ProductImage;
-use App\Models\ProductVariation;
 use App\Models\Size;
+use App\Models\Color;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Discount;
 use App\Models\SizeType;
+use Illuminate\Support\Str;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use App\Models\ProductVariation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -50,12 +51,6 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         try{
@@ -64,7 +59,7 @@ class ProductController extends Controller
                 'name' => 'required',
                 'sku'=> 'required|unique:product,sku',
                 'description' => 'required',
-                // 'images' => 'required'
+                'images' => 'required',
                 'size_type'=>'required',
                 'size_values'=>'required',
                 'price'=>'required',
@@ -83,7 +78,7 @@ class ProductController extends Controller
                 'quantity.required'=>'please set the quantity of the product',
                 'stock_alert.required'=>'please set a stock alert ',
                 'disount.required'=>'the discount is required',
-                // 'images.required'=>'the product images are required',
+                'images.required'=>'the product images are required',
             ]);
 
             if ($validateProduct->fails()){
@@ -98,18 +93,18 @@ class ProductController extends Controller
             // ];
             $product = new Product();
             $product->name = $request->name;
-            $product->sku = $request->sku;
+            $product->sku = Str::slug($product->name);
             $product->description = $request->description;
             $product->stock_alert = $request->stock_alert;
             $product->gender = $request->has('gender') ? $request->gender : 'mix';
             $product->category_id = $request->category_id;
-            $request->has('discount_id') ? $product->discount_id = $request->category_id : '';
+            $product->discount_id = $request->has('discount_id') ? $request->discount_id : '';
             if ($request->has('product_variations')) {
                 foreach ($request->product_variations as $pvr) {
                     $pv = new ProductVariation();
                     $pv->product_id = $product->id;
                     $pv->size_id = $pvr->size_id;
-                    $pvr->has('color_id') ? $pv->color_id = $pvr->color_id : '';
+                    $pv->color_id = $pvr->has('color_id') ? $pvr->color_id : '';
                     $pv->quantity = $pvr->quantity;
                     $pv->price = $pvr->price;
                     $pv->save();
