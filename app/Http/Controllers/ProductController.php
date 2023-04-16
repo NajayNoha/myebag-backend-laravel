@@ -51,6 +51,21 @@ class ProductController extends Controller
         }
     }
 
+    public function storeImages(Request $request) {
+        try {
+            return response()->json($request->all());
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
+
     public function store(Request $request)
     {
         try{
