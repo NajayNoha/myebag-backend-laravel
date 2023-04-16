@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use Illuminate\Support\Str;
+use App\Models\UserAdress;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class CategoryController extends Controller
+class UserAdressController extends Controller
 {
     public function index() {
         try{
-            $categories = Category::all();
+            $user_adress = UserAdress::all();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'categories' => $categories
-                ],
+                    'user_adress' => $user_adress
+                    ]
             ], 200);
         }catch(\Throwable $th){
             return response()->json(
@@ -31,23 +29,22 @@ class CategoryController extends Controller
             );
         }
     }
-
     public function show($id) {
         try{
-            $category = Category::find($id);
-            if (!isset($category)){
+            $user_adress = UserAdress::find($id);
+            if (!isset($user_adress)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'Category Does Not Exist'
+                    'message' => 'User Does Not Exist'
                 ], 404);
             }
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category
-                ],
+                    'user_adress' => $user_adress
+                ]
             ], 200);
         }catch(\Throwable $th){
             return response()->json(
@@ -63,49 +60,38 @@ class CategoryController extends Controller
 
     public function store(Request $request) {
         try{
-            $validateCategory = Validator::make($request->all(),
+            $validateUserAdress = Validator::make($request->all(),
             [
-                'name' => 'required',
-                'description' => 'required',
-                'image' => 'required|mimes:jpg,png,webp,jpeg'
+                'user_id' => 'required',
+                'adress_line1' => 'required',
+                'city' => 'required',
+                'postal_code' => 'required',
+                'country' => 'required',
+                'telephone' => 'required',
             ]);
 
-            if ($validateCategory->fails()){
+            if ($validateUserAdress->fails()){
                 return response()->json([
                     'status' => false,
                     'code' => 'VALIDATION_ERROR',
-                    'errors' => $validateCategory->errors()
+                    'errors' => $validateUserAdress->errors()
                 ], 405);
             }
-
-            // if(!$request->has('image')) {
-            //     return response()->json([
-            //         'status' => true,
-            //         'code' => 'VALIDATION_ERROR',
-            //         'errors' => [
-            //             'image' => 'Image not uploaded'
-            //         ]
-            //     ], 405);
-            // }
-
-            // get extension
-            $extention = $request->file('image')->getClientOriginalExtension();
-            // generate unique name
-            $image_name = substr(Str::slug($request->name), 0, 20) . '-' . uniqid() . '.' . $extention;
-            // store file to storage/images/categories/image_name
-            $path = Storage::disk('public')->putFileAs('images', $request->file('image'), $image_name);
-
-            $category = Category::create([
-                "name"=>$request->name,
-                "description"=>$request->description,
-                "image"=> 'storage/' . $path
+            $user_adress = UserAdress::create([
+                "user_id"=>$request->user_id,
+                "adress_line1"=>$request->adress_line1,
+                "adress_line2"=>$request->adress_line2,
+                "city"=>$request->city,
+                "postal_code"=>$request->postal_code,
+                "country"=>$request->country,
+                "telephone"=>$request->telephone,
+                "mobile"=>$request->mobile,
             ]);
-
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category,
+                    'user_adress' => $user_adress,
                     ]
             ], 200);
         }catch(\Throwable $th){
@@ -122,23 +108,28 @@ class CategoryController extends Controller
 
     public function edit(Request $request, $id) {
         try{
-            $category = Category::find($id);
-            if (!isset($category)){
+            $user_adress = UserAdress::find($id);
+            if (!isset($user_adress)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'Category Does Not Exist'
+                    'message' => 'User Adress Does Not Exist'
                 ], 404);
             }
-            $category->name = $request->name;
-            $category->description = $request->description;
-            $category->image = $request->image;
-            $category->save();
+            $user_adress->user_id = $request->user_id;
+            $user_adress->adress_line1 = $request->adress_line1;
+            $user_adress->adress_line2 = $request->adress_line2;
+            $user_adress->city = $request->city;
+            $user_adress->postal_code = $request->postal_code;
+            $user_adress->country = $request->country;
+            $user_adress->telephone = $request->telephone;
+            $user_adress->mobile = $request->mobile;
+            $user_adress->save();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category
+                    'user_adress' => $user_adress
                 ]
             ], 200);
         }catch(\Throwable $th){
@@ -155,20 +146,20 @@ class CategoryController extends Controller
 
     public function destroy(Request $request, $id) {
         try{
-            $category = Category::find($id);
-            if (!isset($category)){
+            $user_adress = UserAdress::find($id);
+            if (!isset($user_adress)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'Category Does Not Exist'
+                    'message' => 'User Adress Does Not Exist'
                 ], 404);
             }
-            $category->delete();
+            $user_adress->delete();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category
+                    'user_adress' => $user_adress
                 ]
             ], 200);
         }catch(\Throwable $th){
@@ -180,6 +171,6 @@ class CategoryController extends Controller
                 ],
                 500
             );
-        }
+        }    
     }
 }
