@@ -13,6 +13,7 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Models\ProductVariation;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -53,7 +54,32 @@ class ProductController extends Controller
 
     public function storeImages(Request $request) {
         try {
-            return response()->json($request->all());
+
+            $images = [];
+
+            foreach ($request->input('images') as $key => $image) {
+
+                // Image order
+                $order = $image['order'];
+
+                // image file
+                $file = $request->file('images')[$key]['image'];
+                $extension = $file->getClientOriginalExtension();
+
+                // set image name
+                $image_name = 'product_' .$order .'_' . time().'.' . $extension;
+
+                // path where image should be saved | add product id to it.
+                $path_to_save = 'images/products';
+
+                $path = Storage::disk('public')->putFileAs($path_to_save, $file, $image_name);
+
+                $images[$order] = $path;
+            }
+
+
+            return response()->json($images);
+
         }catch(\Throwable $th){
             return response()->json(
                 [
