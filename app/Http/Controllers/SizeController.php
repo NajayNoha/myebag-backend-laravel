@@ -17,8 +17,9 @@ class SizeController extends Controller
     public function index()
     {
         try {
-            $sizes = DB::table('sizes')->join('size_types','sizes.size_type_id', 'size_types.id')
-            ->select('sizes.*', 'size_types.name')->get();
+            // $sizes = DB::table('sizes')->join('size_types','sizes.size_type_id', 'size_types.id')
+            // ->select('sizes.*', 'size_types.name')->get();
+            $sizes = SizeType::with('sizes')->get();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
@@ -59,18 +60,24 @@ class SizeController extends Controller
         // }
         try {
             $size_type = new SizeType();
-            $size_type->id = $request->id;
             $size_type->name = $request->name;
             $size_type->save();
             if ($request->has('sizes')) {
                 foreach ($request->sizes as $size) {
                     $s = new Size();
-                    $s->id = $size->id;
-                    $s->value = $size->name;
+                    $s->value = $size['name'];
                     $s->size_type_id = $size_type->id;
                     $s->save();
                 }
             }
+
+            return response()->json([
+                'status' => true,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'size' => $size_type->with('sizes')
+                ],
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json(
                 [
@@ -92,7 +99,7 @@ class SizeController extends Controller
     public function show($id)
     {
         try{
-            $size = Size::find($id);
+            $size = SizeType::find($id);
             if (!isset($size)){
                 return response()->json([
                     'status' => false,
@@ -143,7 +150,6 @@ class SizeController extends Controller
                         $s = Size::find($size->id)->where('size_type_id', $size_type->id);
                     }else {
                         $s = new Size();
-                        $s->id = $size->id;
                     }
                     $s->value = $size->name;
                     $s->size_type_id = $size_type->id;
@@ -185,11 +191,13 @@ class SizeController extends Controller
                     'message' => 'size type Does Not Exist'
                 ], 404);
             }
-            $sizes = Size::find($id)->where('size_type_id', $size_type->id);
-            foreach ($sizes as $size) {
-                $size->delete();
-            }
+
+            $size_type->sizes()->delete();
             $size_type->delete();
+            // $sizes = Size::find($id)->where('size_type_id', $size_type->id);
+            // foreach ($sizes as $size) {
+            //     $size->delete();
+            // }
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',

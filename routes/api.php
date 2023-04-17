@@ -52,7 +52,7 @@ Route::delete("/users/{id}", [UserController::class, "destroy"]);
 
 Route::get("/sizes", [SizeController ::class, "index"]);
 Route::get("/sizes/{id}", [SizeController::class, "show"]);
-Route::post("/sizes/store", [SizeController::class, "store"]);
+Route::post("/sizes", [SizeController::class, "store"]);
 Route::post("/sizes/{id}", [SizeController::class, "edit"]);
 Route::delete("/sizes/{id}", [SizeController::class, "destroy"]);
 
