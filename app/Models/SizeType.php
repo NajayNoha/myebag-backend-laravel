@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderDetail extends Model
+class SizeType extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'user_id',
-        'total',
+        'name',
+        'sub_name'
     ];
-
-    public function orderItems()
+    public function sizes()
     {
-        return $this->hasMany(OrderItem::class, 'oder_item_id', 'id');
+        return $this->hasMany(Size::class, 'size_type_id', 'id');
     }
 }

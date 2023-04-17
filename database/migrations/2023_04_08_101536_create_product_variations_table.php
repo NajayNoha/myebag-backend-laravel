@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('product_variations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained();
-            $table->string('size');
-            $table->string('color')->nullable();
-            $table->integer('quantity')->default(1);
+            $table->foreignId('size_id')->constrained('sizes');
+            $table->integer('color_id')->nullable();
+            $table->integer('quantity')->default(0);
             $table->integer('price');
             $table->timestamps();
         });
