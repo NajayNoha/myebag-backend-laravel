@@ -77,7 +77,6 @@ class ProductController extends Controller
                 $images[$order] = $path;
             }
 
-
             return response()->json($images);
 
         }catch(\Throwable $th){
@@ -98,28 +97,16 @@ class ProductController extends Controller
             $validateProduct = Validator::make($request->all(),
             [
                 'name' => 'required',
-                'sku'=> 'required|unique:product,sku',
                 'description' => 'required',
-                'images' => 'required',
-                'size_type'=>'required',
-                'size_values'=>'required',
-                'price'=>'required',
-                'quantity'=>'required',
-                'category'=>'required',
+                'size_type_id'=>'required',
+                'category_id'=>'required',
                 'stock_alert' => 'required',
-                'discount' => 'required',
             ], [
                 'name.required'=>'the product name is required',
-                'sku.required'=>'the product sku is required',
-                'sku.unique'=> 'the sku must be unique ',
+                'name.description'=>'the product name is required',
                 'category.required'=>'the product must have a category',
-                'size_type.required'=>'please set wish size system you are using',
-                'size_values.required'=>'the product must have sizes',
-                'price.required'=>'the product must have a price',
-                'quantity.required'=>'please set the quantity of the product',
+                'size_type_id.required'=>'please set wish size system you are using',
                 'stock_alert.required'=>'please set a stock alert ',
-                'disount.required'=>'the discount is required',
-                'images.required'=>'the product images are required',
             ]);
 
             if ($validateProduct->fails()){
@@ -135,27 +122,29 @@ class ProductController extends Controller
             $product = new Product();
             $product->name = $request->name;
             $product->sku = Str::slug($product->name);
+            $product->size_type_id = $request->size_type_id;
             $product->description = $request->description;
             $product->stock_alert = $request->stock_alert;
             $product->gender = $request->has('gender') ? $request->gender : 'mix';
             $product->category_id = $request->category_id;
             $product->discount_id = $request->has('discount_id') ? $request->discount_id : '';
+            $product->save();
             if ($request->has('product_variations')) {
                 foreach ($request->product_variations as $pvr) {
                     $pv = new ProductVariation();
                     $pv->product_id = $product->id;
-                    $pv->size_id = $pvr->size_id;
-                    $pv->color_id = $pvr->has('color_id') ? $pvr->color_id : '';
-                    $pv->quantity = $pvr->quantity;
-                    $pv->price = $pvr->price;
+                    $pv->size_id = $pvr['size_id'];
+                    $pv->color_id = $pvr['color_id'];
+                    $pv->quantity = $pvr['quantity'];
+                    $pv->price = 100;
                     $pv->save();
                 }
             }
             if ($request->has('images')) {
                 foreach ($request->images as $image) {
                     $img = new ProductImage();
-                    $img->id = $image->id;
-                    $image->order = $image->order;
+                    $img->product_id = $product->id;
+                    $image->order = $image['order'];
                     if ($image->hasFile('image1')) {
                         $file = $image->file('image1');
                         $extension = $file->getClientOriginalExtension();

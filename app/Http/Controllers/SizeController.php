@@ -65,7 +65,7 @@ class SizeController extends Controller
             if ($request->has('sizes')) {
                 foreach ($request->sizes as $size) {
                     $s = new Size();
-                    $s->value = $size['name'];
+                    $s->value = $size['value'];
                     $s->size_type_id = $size_type->id;
                     $s->save();
                 }
