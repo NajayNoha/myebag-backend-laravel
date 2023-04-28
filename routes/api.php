@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -35,6 +36,8 @@ Route::post("auth/signup", [SignupController::class, "register"]);
 Route::post("auth/login", [LoginController::class, "login"]);
 Route::get("auth/logout", [LogoutController::class, "logout"]);
 
+Route::get("auth/google", [GoogleController::class, "getAuthUrl"]);
+
 
 Route::get("/categories", [CategoryController::class, "index"]);
 Route::get("/categories/{id}", [CategoryController::class, "show"]);
@@ -63,7 +66,7 @@ Route::get("/products/{id}", [ProductController::class, "show"]);
 Route::post("/products", [ProductController::class, "store"]);
 Route::post("/products/images", [ProductController::class, "storeImages"]);
 Route::post("/products/{id}", [ProductController::class, "edit"]);
-Route::delete("/product/{id}", [ProductController::class, "destroy"]);
+Route::delete("/products/{id}", [ProductController::class, "destroy"]);
 
 Route::get("/colors", [ColorController::class, "index"]);
 Route::get("/colors/{id}", [ColorController::class, "show"]);
