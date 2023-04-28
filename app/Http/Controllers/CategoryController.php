@@ -93,7 +93,7 @@ class CategoryController extends Controller
             // generate unique name
             $image_name = substr(Str::slug($request->name), 0, 20) . '-' . uniqid() . '.' . $extention;
             // store file to storage/images/categories/image_name
-            $path = Storage::disk('public')->putFileAs('images', $request->file('image'), $image_name);
+            $path = Storage::disk('public')->putFileAs('images/categories', $request->file('image'), $image_name);
 
             $category = Category::create([
                 "name"=>$request->name,

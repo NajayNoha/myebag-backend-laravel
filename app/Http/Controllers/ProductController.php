@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ProductHelper;
 use App\Models\Size;
 use App\Models\Color;
 use App\Models\Product;
@@ -13,6 +14,7 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Models\ProductVariation;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -25,13 +27,11 @@ class ProductController extends Controller
     public function index()
     {
         try{
-            $products = Product::all()  ;
-            foreach ($products as $product) {
-                $product_variations = ProductVariation::where('product_id', $product->id);
-                $product['product_variations'] = $product_variations;
-                $product_images = ProductImage::where('product_id', $product->id);
-                $product['images'] = $product_images;
-            }
+            $relationships = ['variations' => ['size', 'color'], 'images', 'category', 'size_type.sizes'];
+
+            $products = Product::with($relationships)->get()
+            ->map(fn($p) => ProductHelper::with_state($p));
+
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
@@ -51,34 +51,61 @@ class ProductController extends Controller
         }
     }
 
+    public function storeImages(Request $request) {
+        try {
+
+            $images = [];
+
+            foreach ($request->input('images') as $key => $image) {
+
+                // Image order
+                $order = $image['order'];
+
+                // image file
+                $file = $request->file('images')[$key]['image'];
+                $extension = $file->getClientOriginalExtension();
+
+                // set image name
+                $image_name = 'product_' .$order .'_' . time().'.' . $extension;
+
+                // path where image should be saved | add product id to it.
+                $path_to_save = 'images/products';
+
+                $path = Storage::disk('public')->putFileAs($path_to_save, $file, $image_name);
+
+                $images[$order] = $path;
+            }
+
+            return response()->json($images);
+
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
+
     public function store(Request $request)
     {
         try{
             $validateProduct = Validator::make($request->all(),
             [
                 'name' => 'required',
-                'sku'=> 'required|unique:product,sku',
                 'description' => 'required',
-                'images' => 'required',
-                'size_type'=>'required',
-                'size_values'=>'required',
-                'price'=>'required',
-                'quantity'=>'required',
-                'category'=>'required',
+                'size_type_id'=>'required',
+                'category_id'=>'required',
                 'stock_alert' => 'required',
-                'discount' => 'required',
             ], [
                 'name.required'=>'the product name is required',
-                'sku.required'=>'the product sku is required',
-                'sku.unique'=> 'the sku must be unique ',
+                'name.description'=>'the product name is required',
                 'category.required'=>'the product must have a category',
-                'size_type.required'=>'please set wish size system you are using',
-                'size_values.required'=>'the product must have sizes',
-                'price.required'=>'the product must have a price',
-                'quantity.required'=>'please set the quantity of the product',
+                'size_type_id.required'=>'please set wish size system you are using',
                 'stock_alert.required'=>'please set a stock alert ',
-                'disount.required'=>'the discount is required',
-                'images.required'=>'the product images are required',
             ]);
 
             if ($validateProduct->fails()){
@@ -90,49 +117,69 @@ class ProductController extends Controller
                 ], 405);
             }
 
-            // ];
+            DB::beginTransaction();
+
             $product = new Product();
             $product->name = $request->name;
             $product->sku = Str::slug($product->name);
+            $product->size_type_id = $request->size_type_id;
             $product->description = $request->description;
             $product->stock_alert = $request->stock_alert;
             $product->gender = $request->has('gender') ? $request->gender : 'mix';
             $product->category_id = $request->category_id;
             $product->discount_id = $request->has('discount_id') ? $request->discount_id : '';
+            $product->save();
             if ($request->has('product_variations')) {
                 foreach ($request->product_variations as $pvr) {
                     $pv = new ProductVariation();
                     $pv->product_id = $product->id;
-                    $pv->size_id = $pvr->size_id;
-                    $pv->color_id = $pvr->has('color_id') ? $pvr->color_id : '';
-                    $pv->quantity = $pvr->quantity;
-                    $pv->price = $pvr->price;
+                    $pv->size_id = $pvr['size_id'];
+                    $pv->color_id = $pvr['color_id'];
+                    $pv->quantity = $pvr['quantity'];
+                    $pv->price = 100;
                     $pv->save();
                 }
             }
             if ($request->has('images')) {
-                foreach ($request->images as $image) {
-                    $img = new ProductImage();
-                    $img->id = $image->id;
-                    $image->order = $image->order;
-                    if ($image->hasFile('image1')) {
-                        $file = $image->file('image1');
-                        $extension = $file->getClientOriginalExtension();
-                        $filename = $image->order . '.' . $extension;
-                        $file->storeAs('public/images/products' . $product->sku, $filename);
-                        $img->path = $image->path;
-                    }
-                    $img->save();
+
+                $images = [];
+
+                foreach ($request->input('images') as $key => $image) {
+
+                    // Image order
+                    $order = $image['order'];
+
+                    // image file
+                    $file = $request->file('images')[$key]['image'];
+                    $extension = $file->getClientOriginalExtension();
+
+                    // set image name
+                    $image_name = 'product_' .$order .'_' . time().'.' . $extension;
+
+                    // path where image should be saved | add product id to it.
+                    $path_to_save = 'images/products/' . $product->id;
+
+                    $path = Storage::disk('public')->putFileAs($path_to_save, $file, $image_name);
+
+                    $stored_image = ProductImage::create([
+                        'product_id' => $product->id,
+                        'path' => 'storage/' . $path,
+                        'order' => $order
+                    ]);
+
                 }
             }
+
+            DB::commit();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'product' => $product,
+                    'product' => Product::find($product->id)->with(['images', 'variations' => ['size', 'color'], 'size_type.sizes']),
                     ]
             ], 200);
         }catch(\Throwable $th){
+            DB::rollBack();
             return response()->json(
                 [
                     'status' => false,
@@ -285,14 +332,8 @@ class ProductController extends Controller
                     'message' => 'product Does Not Exist'
                 ], 404);
             }
-            $product_variations = ProductVariation::where('product_id', $product->id);
-            $product_images = ProductImage::where('product_id', $product->id);
-            foreach ($product_variations as $pv) {
-                $pv->delete();
-            }
-            foreach ($product_images as $img) {
-                $img->delete();
-            }
+            $product_variations = ProductVariation::where('product_id', $product->id)->delete();
+            $product_images = ProductImage::where('product_id', $product->id)->delete();
             $product->delete();
             // you have to delete the orders too Or you better just desactivate it
             return response()->json([
