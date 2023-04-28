@@ -80,8 +80,8 @@ class OrderController extends Controller
                 ], 405);
             }
             $order_detail = OrderDetail::create([
-                // "user_id"=> $request->user()->id,
-                "user_id"=> $request->user_id,
+                "user_id"=> $request->user()->id,
+                // "user_id"=> $request->user_id,
                 "total"=>$request->total,
             ]);
             if ($order_detail) {
