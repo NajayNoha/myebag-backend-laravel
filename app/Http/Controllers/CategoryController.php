@@ -66,16 +66,8 @@ class CategoryController extends Controller
             $validateCategory = Validator::make($request->all(),
             [
                 'name' => 'required',
-                'sku'=> 'required',
                 'description' => 'required',
-<<<<<<< HEAD
-                'size_system'=> 'required',
-                'gender'=> 'required',
-                'category' => 'required',
-                'discount'=> 'required',
-=======
                 'image' => 'required|mimes:jpg,png,webp,jpeg'
->>>>>>> d7fd8335b3b55eb4d82cd082ecaf3cd8206db08a
             ]);
 
             if ($validateCategory->fails()){

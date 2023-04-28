@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrderDetail;
+use App\Models\User;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -31,7 +33,7 @@ class OrderController extends Controller
         }
     }
 
-    public function show($id) {
+    public function show($id, Request $request) {
         try{
             $order = OrderDetail::find($id);
             if (!isset($order)){
@@ -45,7 +47,8 @@ class OrderController extends Controller
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'order' => $order
+                    'order' => $order,
+                    'id' => Auth::id()
                 ]
             ], 200);
         }catch(\Throwable $th){
@@ -77,15 +80,15 @@ class OrderController extends Controller
                     'errors' => $validateOrder->errors()
                 ], 405);
             }
-            $orderD = OrderDetail::create([
-                "user_id"=>$request->user_id,
+            $order_detail = OrderDetail::create([
+                "user_id"=> $request->user()->id,
                 "total"=>$request->total,
             ]);
-            if ($orderD) {
-                $orderI = OrderItem::create([
+            if ($order_detail) {
+                $order_item = OrderItem::create([
                     "product_variation_id"=>$request->variation,
                     "quantity"=>$request->quantity,
-                    "order_detail_id"=>$orderD->id,
+                    "order_detail_id"=>$order_detail->id,
                 ]);
             }
 
@@ -93,7 +96,7 @@ class OrderController extends Controller
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'order' => $orderI,
+                    'order' => $order_item,
                     ]
             ], 200);
         }catch(\Throwable $th){

@@ -96,3 +96,10 @@ Route::get("/discounts/{id}", [DiscountController::class, "show"]);
 Route::post("/discounts", [DiscountController::class, "store"]);
 Route::post("/discounts/{id}", [DiscountController::class, "edit"]);
 Route::delete("/discounts/{id}", [DiscountController::class, "destroy"]);
+
+
+Route::get("/orders", [OrderController::class, "index"]);
+Route::get("/orders/{id}", [OrderController::class, "show"]);
+Route::post("/orders", [OrderController::class, "store"]);
+Route::post("/orders/{id}", [OrderController::class, "edit"]);
+Route::delete("/orders/{id}", [OrderController::class, "destroy"]);
