@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<<<< Temporary merge branch 1
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DiscountController;
@@ -51,7 +50,6 @@ Route::post("/users/{id}", [UserController::class, "edit"]);
 Route::delete("/users/{id}", [UserController::class, "destroy"]);
 
 
-<<<<<<<<< Temporary merge branch 1
 Route::get("/orders", [OrderController::class, "index"]);
 Route::get("/orders/{id}", [OrderController::class, "show"]);
 Route::post("/orders", [OrderController::class, "store"]);
@@ -82,7 +80,7 @@ Route::get("/discounts/{id}", [DiscountController::class, "show"]);
 Route::post("/discounts", [DiscountController::class, "store"]);
 Route::post("/discounts/{id}", [DiscountController::class, "edit"]);
 Route::delete("/discounts/{id}", [DiscountController::class, "destroy"]);
-=========
+
 Route::get("/sizes", [SizeController ::class, "index"]);
 Route::get("/sizes/{id}", [SizeController::class, "show"]);
 Route::post("/sizes/store", [SizeController::class, "store"]);
@@ -102,4 +100,3 @@ Route::get("/colors/{id}", [ColorController::class, "show"]);
 Route::post("/colors", [ColorController::class, "store"]);
 Route::post("/colors/{id}", [ColorController::class, "edit"]);
 Route::delete("/colors/{id}", [ColorController::class, "destroy"]);
->>>>>>>>> Temporary merge branch 2
