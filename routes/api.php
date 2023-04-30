@@ -56,26 +56,6 @@ Route::post("/users/{id}", [UserController::class, "edit"]);
 Route::delete("/users/{id}", [UserController::class, "destroy"]);
 
 
-Route::get("/sizes", [SizeController ::class, "index"]);
-Route::get("/sizes/{id}", [SizeController::class, "show"]);
-Route::post("/sizes", [SizeController::class, "store"]);
-Route::post("/sizes/{id}", [SizeController::class, "edit"]);
-Route::delete("/sizes/{id}", [SizeController::class, "destroy"]);
-
-
-
-Route::get("/products", [ProductController::class, "index"]);
-Route::get("/products/{id}", [ProductController::class, "show"]);
-Route::post("/products", [ProductController::class, "store"]);
-Route::post("/products/images", [ProductController::class, "storeImages"]);
-Route::post("/products/{id}", [ProductController::class, "edit"]);
-Route::delete("/products/{id}", [ProductController::class, "destroy"]);
-
-Route::get("/colors", [ColorController::class, "index"]);
-Route::get("/colors/{id}", [ColorController::class, "show"]);
-Route::post("/colors", [ColorController::class, "store"]);
-Route::post("/colors/{id}", [ColorController::class, "edit"]);
-Route::delete("/colors/{id}", [ColorController::class, "destroy"]);
 Route::get("/orders", [OrderController::class, "index"]);
 Route::get("/orders/{id}", [OrderController::class, "show"]);
 Route::post("/orders", [OrderController::class, "store"]);
@@ -106,3 +86,23 @@ Route::get("/discounts/{id}", [DiscountController::class, "show"]);
 Route::post("/discounts", [DiscountController::class, "store"]);
 Route::post("/discounts/{id}", [DiscountController::class, "edit"]);
 Route::delete("/discounts/{id}", [DiscountController::class, "destroy"]);
+
+Route::get("/sizes", [SizeController ::class, "index"]);
+Route::get("/sizes/{id}", [SizeController::class, "show"]);
+Route::post("/sizes/store", [SizeController::class, "store"]);
+Route::post("/sizes/{id}", [SizeController::class, "edit"]);
+Route::delete("/sizes/{id}", [SizeController::class, "destroy"]);
+
+
+
+Route::get("/products", [ProductController::class, "index"]);
+Route::get("/products/{id}", [ProductController::class, "show"]);
+Route::post("/products", [ProductController::class, "store"]);
+Route::post("/products/{id}", [ProductController::class, "edit"]);
+Route::delete("/product/{id}", [ProductController::class, "destroy"]);
+
+Route::get("/colors", [ColorController::class, "index"]);
+Route::get("/colors/{id}", [ColorController::class, "show"]);
+Route::post("/colors", [ColorController::class, "store"]);
+Route::post("/colors/{id}", [ColorController::class, "edit"]);
+Route::delete("/colors/{id}", [ColorController::class, "destroy"]);
