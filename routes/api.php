@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ProductController;
@@ -31,6 +32,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/initial', [AppController::class, 'index']);
 
 Route::post("auth/signup", [SignupController::class, "register"]);
 Route::post("auth/login", [LoginController::class, "login"]);

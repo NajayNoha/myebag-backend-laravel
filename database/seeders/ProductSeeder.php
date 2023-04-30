@@ -25,7 +25,7 @@ class ProductSeeder extends Seeder
                 "gender" => "mix",
                 "category_id" => 1,
                 "stock_alert" => 15,
-                "size_type_id" => 1,
+                "size_type_id" => 2,
                 "discount_id" => null,
                 "variations" => [
                     'sizes' => [ 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ],
@@ -54,7 +54,7 @@ class ProductSeeder extends Seeder
                 "gender" => "mix",
                 "category_id" => 1,
                 "stock_alert" => 15,
-                "size_type_id" => 1,
+                "size_type_id" => 2,
                 "discount_id" => null,
                 "variations" => [
                     'sizes' => [ 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ],
@@ -83,7 +83,7 @@ class ProductSeeder extends Seeder
                 "gender" => "mix",
                 "category_id" => 1,
                 "stock_alert" => 15,
-                "size_type_id" => 1,
+                "size_type_id" => 2,
                 "discount_id" => null,
                 "variations" => [
                     'sizes' => [ 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ],
@@ -112,7 +112,7 @@ class ProductSeeder extends Seeder
                 "gender" => "mix",
                 "category_id" => 1,
                 "stock_alert" => 15,
-                "size_type_id" => 1,
+                "size_type_id" => 2,
                 "discount_id" => null,
                 "variations" => [
                     'sizes' => [ 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ],
@@ -152,32 +152,274 @@ class ProductSeeder extends Seeder
         ];
 
         $hoodies = [
-
+            [
+                'name' => "Butter Goods Orchard Pullover Hoody - Cream",
+                'description' => "Butter Goods' Orchard Hoody is a pullover style piece made from a heavyweight, 100% cotton. It features a seasonal graphic and classic Butter logo printed to the chest, along with drawstring hood, kangaroo pouch and ribbed trims.",
+                'sku' => "butter-goods-orchard-pullover-hoody-cream",
+                "gender" => "mix",
+                "category_id" => 2,
+                "stock_alert" => 15,
+                "size_type_id" => 1,
+                "discount_id" => null,
+                "variations" => [
+                    'sizes' => [1, 2, 3, 4, 5, 6],
+                    'color' => 7,
+                    'quantity' => 10
+                ],
+                "images" => [
+                    [
+                        'path' => "storage/images/products/5/product_5_image_1.webp",
+                        'order' => 1
+                    ],
+                    [
+                        'path' => "storage/images/products/5/product_5_image_2.webp",
+                        'order' => 2
+                    ],
+                ]
+            ],
+            [
+                "name" => "Obey Step Hoody - Black",
+                "description" => "Constructed from a cotton/polyester blend fleece, the Step Hoody by Obey features one of their seasonal graphics, embroidered front and centre. Also present is a drawstring hood, ribbed trims and kangaroo pouch.",
+                "sku" => "obey-step-hoody-black",
+                "gender" => "mix",
+                "category_id" => 2,
+                "stock_alert" => 15,
+                "size_type_id" => 1,
+                "discount_id" => null,
+                "variations" => [
+                    'sizes' => [1, 2, 3, 4, 5, 6],
+                    'color' => 2,
+                    'quantity' => 10
+                ],
+                "images" => [
+                    [
+                        'path' => "storage/images/products/6/product_6_image_1.webp",
+                        'order' => 1
+                    ],
+                    [
+                        'path' => "storage/images/products/6/product_6_image_2.webp",
+                        'order' => 2
+                    ],
+                ]
+            ],
+            [
+                "name" => "Pleasures Suffering Hoody - Black",
+                "description" => "With oversized embroidery, the Pleasures Suffering Hoody comes in a heavyweight cotton poly blend. Featuring a large scale seasonal embroidered piece to the front alongside the Pleasures logo. The hoody is finished with ribbed cuffs and hem and a kangaroo pocket.",
+                "sku" => "pleasures-suffering-hoody-black",
+                "gender" => "mix",
+                "category_id" => 2,
+                "stock_alert" => 15,
+                "size_type_id" => 1,
+                "discount_id" => null,
+                "variations" => [
+                    'sizes' => [1, 2, 3, 4, 5, 6],
+                    'color' => 2,
+                    'quantity' => 10
+                ],
+                "images" => [
+                    [
+                        'path' => "storage/images/products/7/product_7_image_1.webp",
+                        'order' => 1
+                    ],
+                    [
+                        'path' => "storage/images/products/7/product_7_image_2.webp",
+                        'order' => 2
+                    ],
+                ]
+            ],
+            [
+                "name" => "Pleasures Blurry Hoody - Sand",
+                "description" => "The Pleasures Blurry Hoody comes in a heavyweight cotton/poly blend. Featuring a printed logo to the front, the hoody is finished with ribbed cuffs and hem, drawstring hood and a kangaroo pocket.",
+                "sku" => "pleasures-blurry-hoody-sand",
+                "gender" => "mix",
+                "category_id" => 2,
+                "stock_alert" => 15,
+                "size_type_id" => 1,
+                "discount_id" => null,
+                "variations" => [
+                    'sizes' => [1, 2, 3, 4, 5, 6],
+                    'color' => 7,
+                    'quantity' => 10
+                ],
+                "images" => [
+                    [
+                        'path' => "storage/images/products/8/product_8_image_1.webp",
+                        'order' => 1
+                    ],
+                    [
+                        'path' => "storage/images/products/8/product_8_image_2.jpg",
+                        'order' => 2
+                    ],
+                ]
+            ],
+            // [
+            //     "name" => "",
+            //     "description" => "",
+            //     "sku" => "",
+            //     "gender" => "mix",
+            //     "category_id" => 2,
+            //     "stock_alert" => 15,
+            //     "size_type_id" => 1,
+            //     "discount_id" => null,
+            //     "variations" => [
+            //         'sizes' => [1, 2, 3, 4, 5, 6],
+            //         'color' => 1,
+            //         'quantity' => 10
+            //     ]
+            // ],
         ];
 
-        foreach($shoes as $shoe) {
+        $watches = [
+            [
+                "name" => "Ladies Olivia Burton Mermaid Tail Watch",
+                "description" => "If you've always wanted to channel some mermaid vibes, here's how. As you can probably tell, Olivia Burton must have had a lot of fun designing this mermaid-tail inspired timepiece. A shimmery rainbow of scalloped scales adorns the bold Demi dial, all set off by contemporary silver casing and mesh strap. This is guaranteed to bring a smile every time you look down at your wrist.",
+                "sku" => "ladies-olivia-burton-mermaid-tail",
+                "gender" => "mix",
+                "category_id" => 3,
+                "stock_alert" => 15,
+                "size_type_id" => 2,
+                "discount_id" => null,
+                "variations" => [
+                    'sizes' => [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+                    'color' => 9,
+                    'quantity' => 10
+                ],
+                "images" => [
+                    [
+                        'path' => "storage/images/products/9/product_9_image_1.jpg",
+                        'order' => 1
+                    ],
+                    [
+                        'path' => "storage/images/products/9/product_9_image_2.jpg",
+                        'order' => 2
+                    ],
+                    [
+                        'path' => "storage/images/products/9/product_9_image_3.jpg",
+                        'order' => 3
+                    ],
+                ]
+            ],
+            [
+                "name" => "Mens Lacoste Watch",
+                "description" => "Lacoste 2011050 is an amazing and attractive Gents watch from Heritage collection. Case is made out of Stainless Steel while the dial colour is White. In regards to the water resistance, the watch has got a resistancy up to 50 metres. It means it can be submerged in water for periods, so can be used for swimming and fishing. It is not recommended for high impact water sports. We ship it with an original box and a guarantee from the manufacturer.",
+                "sku" => "mens-lacoste-watch",
+                "gender" => "mix",
+                "category_id" => 3,
+                "stock_alert" => 15,
+                "size_type_id" => 2,
+                "discount_id" => null,
+                "variations" => [
+                    'sizes' => [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+                    'color' => 9,
+                    'quantity' => 10
+                ],
+                "images" => [
+                    [
+                        'path' => "storage/images/products/10/product_10_image_1.jpg",
+                        'order' => 1
+                    ],
+                    [
+                        'path' => "storage/images/products/10/product_10_image_2.jpg",
+                        'order' => 2
+                    ],
+                ]
+            ],
+            [
+                "name" => "Mens Accurist Chronograph Watch",
+                "description" => "A versatile and innovative chronograph from Accurist, bringing fun and flavour to a sensible and functional design.
+
+                It's much more than the yellow dial which makes this new offering from the English manufacturers a style leader, although the yellow is hard to ignore! Rather than dominate the look of the watch, it sits beautifully alongside the white hands (which are outlined in black), providing a stark contrast yet achieving a modern look and feel.
+
+                The black stainless steel strap (which we will resize for free) adds the layer of elegance and sophistication which brings together these clashes of style into one cohesive and timeless watch. You wouldn’t normally expect to see such a vibrant and playful watch as a chronograph, but you can here you can enjoy all the benefits that a stopwatch and an independent sweep second hand add to this unique piece.",
+                "sku" => "mens-accurist-chronograph-watch",
+                "gender" => "mix",
+                "category_id" => 3,
+                "stock_alert" => 15,
+                "size_type_id" => 2,
+                "discount_id" => null,
+                "variations" => [
+                    'sizes' => [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+                    'color' => 2,
+                    'quantity' => 10
+                ],
+                "images" => [
+                    [
+                        'path' => "storage/images/products/11/product_11_image_1.webp",
+                        'order' => 1
+                    ],
+                    [
+                        'path' => "storage/images/products/11/product_11_image_2.webp",
+                        'order' => 2
+                    ],
+                    [
+                        'path' => "storage/images/products/11/product_11_image_3.jpg",
+                        'order' => 3
+                    ],
+                ]
+            ],
+            [
+                "name" => "Mens HUGO #Seek Watch",
+                "description" => "HUGO #Seek 1530151 is an amazing and special Gents watch from #Seek collection. Case material is Stainless Steel, which stands for a high quality of the item while the dial colour is Black. In regards to the water resistance, the watch is marked as water resistant to 30 metres. This means it can be worn in scenarios where it is likely to be splashed but not immersed in water. It can be worn while washing your hands and will be fine in rain. The watch is shipped with an original box and a guarantee from the manufacturer.",
+                "sku" => "mens-hugo-seek-watch",
+                "gender" => "mix",
+                "category_id" => 3,
+                "stock_alert" => 15,
+                "size_type_id" => 2,
+                "discount_id" => null,
+                "variations" => [
+                    'sizes' => [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+                    'color' => 9,
+                    'quantity' => 10
+                ],
+                "images" => [
+                    [
+                        'path' => "storage/images/products/12/product_12_image_1.webp",
+                        'order' => 1
+                    ],
+                    [
+                        'path' => "storage/images/products/12/product_12_image_2.jpg",
+                        'order' => 2
+                    ],
+                    [
+                        'path' => "storage/images/products/12/product_12_image_3.jpg",
+                        'order' => 3
+                    ],
+                ]
+            ],
+        ];
+
+
+        $this->insertData($shoes);
+        $this->insertData($hoodies);
+        $this->insertData($watches);
+
+    }
+
+
+    public function insertData($items) {
+        foreach($items as $item) {
             $product = Product::create([
-                'name' => $shoe['name'],
-                'description' => $shoe['description'],
-                'sku' => $shoe['sku'],
-                'gender' => $shoe['gender'],
-                'category_id' => $shoe['category_id'],
-                'stock_alert' => $shoe['stock_alert'],
-                'size_type_id' => $shoe['size_type_id'],
-                'discount_id' => $shoe['discount_id'],
+                'name' => $item['name'],
+                'description' => $item['description'],
+                'sku' => $item['sku'],
+                'gender' => $item['gender'],
+                'category_id' => $item['category_id'],
+                'stock_alert' => $item['stock_alert'],
+                'size_type_id' => $item['size_type_id'],
+                'discount_id' => $item['discount_id'],
             ]);
 
-            foreach($shoe['variations']['sizes'] as $size) {
+            foreach($item['variations']['sizes'] as $size) {
                 ProductVariation::create([
                     'product_id' => $product->id,
                     'size_id' => $size,
-                    'color_id' => $shoe['variations']['color'],
+                    'color_id' => $item['variations']['color'],
                     'quantity' => 30,
                     'price' => 150
                 ]);
             }
 
-            foreach($shoe['images'] as $image) {
+            foreach($item['images'] as $image) {
                 ProductImage::create([
                     'product_id' => $product->id,
                     'path' => $image['path'],

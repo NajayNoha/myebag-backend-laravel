@@ -46,7 +46,7 @@ class CategoryController extends Controller
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category
+                    'category' => $category->with('products')->get()
                 ],
             ], 200);
         }catch(\Throwable $th){

@@ -37,9 +37,21 @@ class ColorSeeder extends Seeder
                 'hex_code' => '#00FF00'
             ],
             [
+                'name' => 'THISTLE',
+                'hex_code' => '#D7BFDC'
+            ],
+            [
+                'name' => 'BEIGE',
+                'hex_code' => '#EEDC9A'
+            ],
+            [
                 'name' => 'VIOLET',
                 'hex_code' => '#8F00FF'
-            ]
+            ],
+            [
+                'name' => 'SILVER',
+                'hex_code' => '#C0C0C0'
+            ],
         ];
 
         foreach($colors as $color) {

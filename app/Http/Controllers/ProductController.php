@@ -201,15 +201,11 @@ class ProductController extends Controller
                     'message' => 'product Does Not Exist'
                 ], 404);
             }
-            $product_images = ProductImage::where('product_id', $id) ;
-            $product_variations = ProductVariation::where('product_id', $id);
-            $product['product_variations'] = $product_variations;
-            $product['images'] = $product_images;
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'product' => $product
+                    'product' => Product::where('id', $id)->with(['variations' => [ 'size', 'color' ], 'images'])->first()
                 ],
             ], 200);
         }catch(\Throwable $th){
