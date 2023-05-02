@@ -13,8 +13,15 @@ class Category extends Model
         'description',
         'image',
     ];
+
+    // protected $appends = ['featured'];
+
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function getFeaturedAttribute() {
+        return $this->products->take(4);
     }
 }

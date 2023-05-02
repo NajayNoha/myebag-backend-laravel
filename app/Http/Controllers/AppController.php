@@ -13,7 +13,7 @@ class AppController extends Controller
         $sizes = SizeType::with('sizes')->get();
         $colors = Color::all();
         // $categories = Category::with(['products' => [ 'images', 'variations' => [ 'size', 'color' ] ]])->get();
-        $featured = [];
+        $featured = Category::has('products')->with(['products' => [ 'images', 'category' ]])->get()->makeVisible('featured');
 
         return response()->json([
             'code' => 'SUCCESS',

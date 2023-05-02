@@ -127,6 +127,8 @@ class ProductController extends Controller
             $product->stock_alert = $request->stock_alert;
             $product->gender = $request->has('gender') ? $request->gender : 'mix';
             $product->category_id = $request->category_id;
+            $product->has_colors = $request->has_colors;
+            $product->same_price = $request->same_price;
             $product->discount_id = $request->has('discount_id') ? $request->discount_id : '';
             $product->save();
             if ($request->has('product_variations')) {
@@ -205,7 +207,7 @@ class ProductController extends Controller
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'product' => Product::where('id', $id)->with(['variations' => [ 'size', 'color' ], 'images'])->first()
+                    'product' => Product::where('id', $id)->with(['category', 'variations' => [ 'size', 'color' ], 'images'])->first()
                 ],
             ], 200);
         }catch(\Throwable $th){

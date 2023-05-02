@@ -13,9 +13,16 @@ class Product extends Model
         'sku',
         'description',
         'category_id',
+        'has_colors',
+        'same_price',
         'size_type_id',
         'gender',
         'discount_id',
+    ];
+
+    protected $cats = [
+        'same_price' => 'boolean',
+        'has_colors' => 'boolean'
     ];
 
     public function category()

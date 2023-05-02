@@ -99,7 +99,7 @@ Route::get("/products", [ProductController::class, "index"]);
 Route::get("/products/{id}", [ProductController::class, "show"]);
 Route::post("/products", [ProductController::class, "store"]);
 Route::post("/products/{id}", [ProductController::class, "edit"]);
-Route::delete("/product/{id}", [ProductController::class, "destroy"]);
+Route::delete("/products/{id}", [ProductController::class, "destroy"]);
 
 Route::get("/colors", [ColorController::class, "index"]);
 Route::get("/colors/{id}", [ColorController::class, "show"]);
