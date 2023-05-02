@@ -127,8 +127,8 @@ class ProductController extends Controller
             $product->stock_alert = $request->stock_alert;
             $product->gender = $request->has('gender') ? $request->gender : 'mix';
             $product->category_id = $request->category_id;
-            $product->has_colors = $request->has_colors;
-            $product->same_price = $request->same_price;
+            $product->has_colors = $request->has_colors ? 1 : 0;
+            $product->same_price = $request->same_price ? 1 : 0;
             $product->discount_id = $request->has('discount_id') ? $request->discount_id : '';
             $product->save();
             if ($request->has('product_variations')) {
