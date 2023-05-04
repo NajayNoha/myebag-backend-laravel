@@ -59,6 +59,7 @@ Route::delete("/users/{id}", [UserController::class, "destroy"]);
 Route::get("/orders", [OrderController::class, "index"]);
 Route::get("/orders/{id}", [OrderController::class, "show"]);
 Route::post("/orders", [OrderController::class, "store"]);
+Route::get("/user/orders", [OrderController::class, "showUserOrders"]);
 
 
 Route::get("/carts", [CartController::class, "index"]);

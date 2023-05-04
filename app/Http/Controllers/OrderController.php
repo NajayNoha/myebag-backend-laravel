@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrderDetail;
 use App\Models\User;
 use App\Models\OrderItem;
+use App\Models\PaymentDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -66,10 +67,6 @@ class OrderController extends Controller
         try{
             $validateOrder = Validator::make($request->all(),
             [
-                'user_id' => 'required',
-                'total' => 'required',
-                'variation' => 'required',
-                'quantity' => 'required',
             ]);
 
             if ($validateOrder->fails()){
@@ -81,23 +78,66 @@ class OrderController extends Controller
             }
             $order_detail = OrderDetail::create([
                 "user_id"=> $request->user()->id,
-                // "user_id"=> $request->user_id,
                 "total"=>$request->total,
             ]);
+            
+            $data = $request->all();
+
             if ($order_detail) {
-                $order_item = OrderItem::create([
-                    "product_variation_id"=>$request->variation,
-                    "quantity"=>$request->quantity,
-                    "order_detail_id"=>$order_detail->id,
-                ]);
+                foreach ($data['items'] as $item) {
+                    $orderItem = new OrderItem();
+                    $orderItem->product_variation_id = $item['product_variation_id'];
+                    $orderItem->quantity = $item['quantity'];
+                    $orderItem->order_detail_id = $order_detail->id;
+                    $orderItem->save();
+                }
+            }
+            $payment = $request->payment_details;
+            if ($order_detail) {
+                $payment_details = new PaymentDetail();
+                $payment_details->order_detail_id = $order_detail->id;
+                $payment_details->amount = $payment['amount'];
+                $payment_details->provider = $payment['provider'];
+                $payment_details->status = $payment['status'];
+                $payment_details->save();
             }
 
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'order' => $order_item,
+                    'order_detail' => $order_detail,
                     ]
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
+
+    public function showUserOrders(Request $request) {
+        try{
+            $userId = $request->user()->id;
+            $orders = OrderDetail::where('user_id', $userId)->get();
+            if (!isset($orders)){
+                return response()->json([
+                    'status' => false,
+                    'code' => 'NOT_FOUND',
+                    'message' => 'Order Does Not Exist'
+                ], 404);
+            }
+            return response()->json([
+                'status' => true,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'user_orders' => $orders,
+                ]
             ], 200);
         }catch(\Throwable $th){
             return response()->json(
