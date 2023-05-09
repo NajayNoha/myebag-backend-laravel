@@ -14,7 +14,7 @@ class OrderController extends Controller
 {
     public function index() {
         try{
-            $orders = OrderDetail::all();
+            $orders = OrderDetail::with(['user', 'order_items' => ['product_variation'], 'payment_detail'])->get();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
@@ -80,7 +80,7 @@ class OrderController extends Controller
                 "user_id"=> $request->user()->id,
                 "total"=>$request->total,
             ]);
-            
+
             $data = $request->all();
 
             if ($order_detail) {

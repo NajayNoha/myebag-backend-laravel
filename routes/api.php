@@ -13,6 +13,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserAdressController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -107,3 +108,7 @@ Route::get("/colors/{id}", [ColorController::class, "show"]);
 Route::post("/colors", [ColorController::class, "store"]);
 Route::post("/colors/{id}", [ColorController::class, "edit"]);
 Route::delete("/colors/{id}", [ColorController::class, "destroy"]);
+
+Route::post('payment/initiate', [StripeController::class, 'initiatePayment']);
+Route::post('payment/complete', [StripeController::class, 'completePayment']);
+Route::post('payment/failure', [StripeController::class, 'failPayment']);

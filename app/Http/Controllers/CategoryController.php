@@ -46,7 +46,7 @@ class CategoryController extends Controller
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category->with('products')->get()
+                    'category' => Category::where('id', $id)->with(['products' => ['images', 'category', 'variations']])->first()
                 ],
             ], 200);
         }catch(\Throwable $th){

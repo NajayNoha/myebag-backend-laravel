@@ -21,7 +21,4 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function getFeaturedAttribute() {
-        return $this->products->take(4);
-    }
 }
