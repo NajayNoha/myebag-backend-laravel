@@ -18,4 +18,9 @@ class OrderDetail extends Model
     {
         return $this->hasMany(OrderItem::class, 'oder_item_id', 'id');
     }
+
+    public function orderStatus()
+    {
+        return $this->belongsTo(OrderStatus::class, 'oder_status_id', 'id');
+    }
 }
