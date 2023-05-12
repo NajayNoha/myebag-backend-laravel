@@ -19,4 +19,8 @@ class OrderItem extends Model
     {
         return $this->belongsTo(OrderDetail::class,  'oder_item_id', 'id');
     }
+
+    public function product_variation() {
+        return $this->belongsTo(ProductVariation::class);
+    }
 }

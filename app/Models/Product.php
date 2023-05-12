@@ -20,7 +20,7 @@ class Product extends Model
         'discount_id',
     ];
 
-    protected $cats = [
+    protected $casts = [
         'same_price' => 'boolean',
         'has_colors' => 'boolean'
     ];
