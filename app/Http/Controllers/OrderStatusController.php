@@ -15,7 +15,7 @@ class OrderStatusController extends Controller
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'order_status' => $order_status
+                    'order_statuses' => $order_status
                     ]
             ], 200);
         }catch(\Throwable $th){
@@ -43,7 +43,7 @@ class OrderStatusController extends Controller
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'Order Status' => $order_status
+                    'order_status' => $order_status
                 ]
             ], 200);
         }catch(\Throwable $th){
@@ -82,12 +82,13 @@ class OrderStatusController extends Controller
                 "mark_as_paid"=>$request->mark_as_paid,
                 "text_color"=>$request->text_color,
                 "background_color"=>$request->background_color,
+                "type"=>$request->type,
             ]);
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'Order Status' => $order_status,
+                    'order_status' => $order_status,
                     ]
             ], 200);
         }catch(\Throwable $th){
@@ -122,7 +123,7 @@ class OrderStatusController extends Controller
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'order status' => $order_status
+                    'order_status' => $order_status
                 ]
             ], 200);
         }catch(\Throwable $th){
@@ -165,6 +166,6 @@ class OrderStatusController extends Controller
                 ],
                 500
             );
-        }    
+        }
     }
 }

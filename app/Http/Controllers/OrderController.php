@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewOrder;
 use App\Models\OrderDetail;
 use App\Models\User;
 use App\Models\OrderItem;
@@ -14,7 +15,7 @@ class OrderController extends Controller
 {
     public function index() {
         try{
-            $orders = OrderDetail::with(['user', 'order_items' => ['product_variation'], 'payment_detail'])->get();
+            $orders = OrderDetail::with(['user', 'order_items' => ['product_variation'], 'payment_detail', 'order_status'])->latest()->get();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
@@ -36,7 +37,7 @@ class OrderController extends Controller
 
     public function show($id, Request $request) {
         try{
-            $order = OrderDetail::find($id);
+            $order = OrderDetail::with(['user', 'order_items' => ['product_variation'], 'payment_detail', 'order_status'])->where('id', $id)->first();
             if (!isset($order)){
                 return response()->json([
                     'status' => false,
@@ -77,8 +78,9 @@ class OrderController extends Controller
                 ], 405);
             }
             $order_detail = OrderDetail::create([
-                "user_id"=> $request->user()->id,
-                "total"=>$request->total,
+                "user_id" => $request->user()->id,
+                "total" => $request->total,
+                "order_status_id" => 1
             ]);
 
             $data = $request->all();
@@ -101,6 +103,11 @@ class OrderController extends Controller
                 $payment_details->status = $payment['status'];
                 $payment_details->save();
             }
+
+            $order = OrderDetail::with(['user', 'order_items' => ['product_variation'], 'payment_detail', 'order_status'])->where('id', $order_detail->id)->first();
+
+
+            event(new NewOrder($order));
 
             return response()->json([
                 'status' => true,

@@ -14,11 +14,9 @@ class OrderStatus extends Model
         'send_notification',
         'mark_as_paid',
         'text_color',
-        'background_color'
+        'background_color',
+        'type'
     ];
 
-    public function orderStatus()
-    {
-        return $this->hasOne(OrderStatus::class,  'oder_status_id', 'id');
-    }
+
 }

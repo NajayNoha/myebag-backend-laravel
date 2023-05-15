@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('order_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('send_notification');
-            $table->integer('mark_as_paid');
+            $table->boolean('send_notification')->default(false);
+            $table->boolean('mark_as_paid')->default(false);
             $table->string('text_color');
-            $table->string('background-color');
+            $table->string('background_color');
+            $table->string('type')->default('admin');
             $table->timestamps();
         });
     }

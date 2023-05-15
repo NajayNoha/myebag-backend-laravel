@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->float('total');
-            $table->string('status')->nullable()->default('process');
+            $table->foreignId('order_status_id')->default(1)->nullable();
+            // $table->foreignId('user_adresse_id');
             $table->timestamps();
         });
     }

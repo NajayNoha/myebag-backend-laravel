@@ -12,10 +12,12 @@ use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderStatusController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserAdressController;
 use App\Http\Controllers\UserController;
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +36,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/initial', [AppController::class, 'index']);
+Route::get('/initial/app', [AppController::class, 'index']);
+Route::get('/initial/dashboard', [AppController::class, 'dashboard']);
 
 Route::post("auth/signup", [SignupController::class, "register"]);
 Route::post("auth/login", [LoginController::class, "login"]);
@@ -57,10 +60,17 @@ Route::post("/users/{id}", [UserController::class, "edit"]);
 Route::delete("/users/{id}", [UserController::class, "destroy"]);
 
 
+Route::get('/orders/statuses', [OrderStatusController::class, 'index']);
+Route::get("/orders/statuses/{id}", [OrderStatusController::class, "show"]);
+Route::delete("/orders/statuses/{id}", [OrderStatusController::class, "destroy"]);
+Route::post("/orders/statuses", [OrderStatusController::class, "store"]);
+
 Route::get("/orders", [OrderController::class, "index"]);
 Route::get("/orders/{id}", [OrderController::class, "show"]);
 Route::post("/orders", [OrderController::class, "store"]);
 Route::get("/user/orders", [OrderController::class, "showUserOrders"]);
+
+
 
 
 Route::get("/carts", [CartController::class, "index"]);
@@ -112,3 +122,4 @@ Route::delete("/colors/{id}", [ColorController::class, "destroy"]);
 Route::post('payment/initiate', [StripeController::class, 'initiatePayment']);
 Route::post('payment/complete', [StripeController::class, 'completePayment']);
 Route::post('payment/failure', [StripeController::class, 'failPayment']);
+

@@ -29,7 +29,7 @@ class ProductController extends Controller
         try{
             $relationships = ['variations' => ['size', 'color'], 'images', 'category', 'size_type.sizes'];
 
-            $products = Product::with($relationships)->get()
+            $products = Product::latest()->orderBy('id', 'DESC')->with($relationships)->get()
             ->map(fn($p) => ProductHelper::with_state($p));
 
             return response()->json([
@@ -173,11 +173,14 @@ class ProductController extends Controller
             }
 
             DB::commit();
+
+            $product = Product::where('id', $product->id)->with(['images', 'variations' => ['size', 'color'], 'size_type.sizes'])->first();
+
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'product' => Product::find($product->id)->with(['images', 'variations' => ['size', 'color'], 'size_type.sizes']),
+                    'product' => $product,
                     ]
             ], 200);
         }catch(\Throwable $th){
