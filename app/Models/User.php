@@ -25,6 +25,8 @@ class User extends Authenticatable
         'telephone',
         'is_admin',
         'is_active',
+        'google_id',
+        'google_jwt',
         'last_action',
     ];
 
@@ -38,6 +40,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = [
+        'total_orders'
+    ];
+
     /**
      * The attributes that should be cast.
      *
@@ -49,6 +55,14 @@ class User extends Authenticatable
     public function cart_items()
     {
         return $this->hasMany(CartItem::class, 'id', 'user_id');
+    }
+
+    public function orders() {
+        return $this->hasMany(OrderDetail::class);
+    }
+
+    public function getTotalOrdersAttribute() {
+        return $this->orders->count();
     }
 
 }

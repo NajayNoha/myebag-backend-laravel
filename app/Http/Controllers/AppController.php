@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\OrderStatus;
 use App\Models\Product;
 use App\Models\SizeType;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AppController extends Controller
@@ -36,6 +37,7 @@ class AppController extends Controller
 
         $sizes = SizeType::with('sizes')->get();
         $colors = Color::all();
+        $users = User::all();
         $products = Product::with($product_relationships)->latest()->get();
         $orderStatuses = OrderStatus::all();
         $categories = Category::latest()->get();
@@ -48,7 +50,7 @@ class AppController extends Controller
                 'colors' => $colors,
                 'categories' => $categories,
                 'products' => $products,
-                // 'featured' => $featured,
+                'users' => $users,
                 'order_statuses' => $orderStatuses
             ]
             ]);

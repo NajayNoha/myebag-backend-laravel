@@ -13,7 +13,9 @@ class OrderDetail extends Model
     protected $fillable = [
         'user_id',
         'total',
-        'order_status_id'
+        'order_status_id',
+        'shipping_address_id',
+        'user_status_id'
     ];
 
     public function order_items()
@@ -32,5 +34,15 @@ class OrderDetail extends Model
     public function order_status()
     {
         return $this->belongsTo(OrderStatus::class, 'order_status_id', 'id');
+    }
+
+    public function order_status_user()
+    {
+        return $this->belongsTo(OrderStatus::class, 'user_status_id', 'id');
+    }
+
+    public function shipping_address()
+    {
+        return $this->belongsTo(UserAdress::class, 'shipping_address_id', 'id');
     }
 }

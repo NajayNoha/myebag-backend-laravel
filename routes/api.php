@@ -41,6 +41,7 @@ Route::get('/initial/dashboard', [AppController::class, 'dashboard']);
 
 Route::post("auth/signup", [SignupController::class, "register"]);
 Route::post("auth/login", [LoginController::class, "login"]);
+Route::post("auth/login_google", [LoginController::class, "login_google"]);
 Route::get("auth/logout", [LogoutController::class, "logout"]);
 
 Route::get("auth/google", [GoogleController::class, "getAuthUrl"]);

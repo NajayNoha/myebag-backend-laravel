@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('telephone')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_active')->default(true);
+            $table->string('google_id')->nullable();
+            $table->json('google_jwt')->nullable();
+
             $table->date('last_action')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

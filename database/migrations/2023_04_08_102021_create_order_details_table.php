@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->float('total');
             $table->foreignId('order_status_id')->default(1)->nullable();
+            $table->foreignId('user_status_id')->default(5)->nullable();
+            $table->foreignId('shipping_address_id')->nullable();
             // $table->foreignId('user_adresse_id');
             $table->timestamps();
         });
