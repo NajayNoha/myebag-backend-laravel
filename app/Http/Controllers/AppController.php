@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CartItem;
-use App\Models\Color;
-use App\Models\Category;
-use App\Models\OrderStatus;
-use App\Models\Product;
-use App\Models\SizeType;
 use App\Models\User;
+use App\Models\Color;
+use App\Models\Product;
+use App\Mail\OrdersMail;
+use App\Models\CartItem;
+use App\Models\Category;
+use App\Models\SizeType;
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+
 
 class AppController extends Controller
 {
@@ -65,5 +69,37 @@ class AppController extends Controller
 
             ]
             ]);
+    }
+    public function testEmail(){
+        try{
+            $user = User::create([
+                'firstname'=> 'nohayla2',
+                'lastname'=> 'najay1',
+                'email'=> 'nohanajayy@gmail.com',
+                'telephone'=> 7272753537,
+                'password'=>'dshiofhfzzzer'
+            ]);
+            Mail::to('najaynohayla@gmail.com')->send(new OrdersMail($user));
+            // toggle new order event
+            // event(new NewOrder($order));
+
+            return response()->json([
+                'status' => true,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'order_detail' => '$order_detail',
+                    ]
+            ], 200);
+        }
+        catch(\Throwable $th) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
     }
 }

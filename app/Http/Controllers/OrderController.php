@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NewOrder;
-use App\Models\OrderDetail;
 use App\Models\User;
+use App\Events\NewOrder;
+use App\Mail\OrdersMail;
 use App\Models\OrderItem;
-use App\Models\PaymentDetail;
 use App\Models\UserAdress;
+use App\Models\OrderDetail;
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
+use App\Models\PaymentDetail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -118,9 +121,17 @@ class OrderController extends Controller
                 $payment_details->save();
             }
 
-            $order = OrderDetail::with(['user', 'order_items' => ['product_variation' => ['product.images']], 'payment_detail', 'order_status', 'order_status_user', 'shipping_address'])->where('id', $order_detail->id)->first();
+            $details = [
+                "total" => $request->total,
+                "order_status" => OrderStatus::find(1),
+                "shipping_address" => $address
+            ];
 
+            // $order = OrderDetail::with(['user', 'order_items' => ['product_variation' => ['product.images']], 'payment_detail', 'order_status', 'order_status_user', 'shipping_address'])->where('id', $order_detail->id)->first();
 
+            // mailling the user to tell him about his order
+            // Mail::to(auth()->user()->email)->send(new OrdersMail(auth()->user(), $data['items'], $details,  $payment_details ));
+            Mail::to($request->user()->email)->send(new OrdersMail());
             // toggle new order event
             // event(new NewOrder($order));
 
@@ -143,15 +154,32 @@ class OrderController extends Controller
         }
     }
 
-    public function updateOrderStatus(Request $request) {
+    public function updateOrderStatus(Request $request, $id) {
         try{
-            return response()->json([
-                'status' => true,
-                'code' => 'SUCCESS',
-                'data' => [
-                    'order' => [],
-                ]
-            ], 200);
+            // expecting
+            // [
+            //     'order_id'=>"",
+            //     'order_status_id'=>"",
+            //     'mark_as_paid'=>,
+            //     'coustumer_id'=>,
+            // ]
+            // "user_id" => $request->user()->id,
+            //     "total" => $request->total,
+            //     "order_status_id" => 1,
+            //     "shipping_address_id" => $address->id
+            $order = OrderDetail::find($id);
+            $order->order_status_id = $request->order_status_id;
+            if($order->save()){
+                $order = OrderDetail::with(['user', 'order_items' => ['product_variation.product.images'], 'payment_detail', 'order_status', 'order_status_user', 'shipping_address'])->where('id', $id)->first();
+
+                return response()->json([
+                    'status' => true,
+                    'code' => 'SUCCESS',
+                    'data' => [
+                        'order' => $order,
+                    ]
+                ], 200);
+            }
         }catch(\Throwable $th){
             return response()->json(
                 [
