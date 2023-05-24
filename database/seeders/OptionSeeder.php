@@ -28,7 +28,7 @@ class OptionSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'option_name' => 'pay_with_stript',
+                'option_name' => 'pay_with_stripe',
                 'option_value' => true,
             ],
             [
@@ -53,18 +53,18 @@ class OptionSeeder extends Seeder
             ],
             [
                 'id' => 8,
-                'option_name' => 'stripe_test_live_key',
-                'option_value' => '',
+                'option_name' => 'stripe_test_secret_key',
+                'option_value' => env('STRIPE_TEST_SECRET_KEY', null),
             ],
             [
                 'id' => 9,
                 'option_name' => 'stripe_test_public_key',
-                'option_value' => '',
+                'option_value' => env('STRIPE_TEST_PUBLIC_KEY', null),
             ],
             [
                 'id' => 10,
                 'option_name' => 'stripe_mode_test',
-                'option_value' => '',
+                'option_value' => true,
             ],
             [
                 'id' => 11,
@@ -78,16 +78,26 @@ class OptionSeeder extends Seeder
             ],
             [
                 'id' => 13,
-                'option_name' => 'paypal_mode_test',
+                'option_name' => 'paypal_live_secret_key',
                 'option_value' => '',
             ],
             [
                 'id' => 14,
-                'option_name' => 'logo_dark',
+                'option_name' => 'paypal_test_secret_key',
                 'option_value' => '',
             ],
             [
                 'id' => 15,
+                'option_name' => 'paypal_mode_test',
+                'option_value' => true,
+            ],
+            [
+                'id' => 16,
+                'option_name' => 'logo_dark',
+                'option_value' => '',
+            ],
+            [
+                'id' => 17,
                 'option_name' => 'logo_light',
                 'option_value' => '',
             ],

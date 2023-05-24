@@ -56,6 +56,8 @@ Route::delete("/categories/{id}", [CategoryController::class, "destroy"]);
 
 
 Route::get("/users", [UserController::class, "index"]);
+Route::post("/users/update/info", [UserController::class, "editInfo"]);
+Route::post("/users/update/password", [UserController::class, "editPassword"]);
 Route::get("/users/{id}", [UserController::class, "show"]);
 Route::post("/users", [UserController::class, "store"]);
 Route::post("/users/{id}", [UserController::class, "edit"]);

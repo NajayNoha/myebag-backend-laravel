@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             ColorSeeder::class,
             OrderStatusSeeder::class,
             CategorySeeder::class,
-            ProductSeeder::class
+            ProductSeeder::class,
+            OptionSeeder::class
         ]);
     }
 }
