@@ -132,5 +132,6 @@ Route::post('payment/failure', [StripeController::class, 'failPayment']);
 Route::get("/options", [OptionController::class, "index"]);
 Route::get("/options/{id}", [OptionController::class, "show"]);
 Route::post("/options", [OptionController::class, "store"]);
-Route::post("/options/{id}", [OptionController::class, "edit"]);
+Route::post("/options/updateMany", [OptionController::class, "updateMany"]);
+// Route::post("/options/{id}", [OptionController::class, "edit"]);
 Route::delete("/options/{id}", [OptionController::class, "destroy"]);

@@ -96,6 +96,53 @@ class OptionController extends Controller
         }
     }
 
+
+    public function updateMany(Request $request) {
+        try{
+            $validateOption = Validator::make($request->all(),
+            [
+                'options' => 'required',
+            ]);
+
+            if ($validateOption->fails()){
+                return response()->json([
+                    'status' => false,
+                    'code' => 'VALIDATION_ERROR',
+                    'errors' => $validateOption->errors()
+                ], 405);
+            }
+
+            $options = $request->options;
+            $newOptions = [];
+            foreach($options as $o) {
+                $option = Option::where('option_name', $o['option_name'])->first();
+
+                if(!$option) continue;
+
+                $option->option_value = $o['option_value'];
+                $option->save();
+                $newOptions[] = $option;
+            }
+
+            return response()->json([
+                'status' => true,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'options' => $newOptions,
+                    ]
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
+
     public function destroy(Request $request, $id) {
         try{
             $option = Option::find($id);
@@ -123,6 +170,6 @@ class OptionController extends Controller
                 ],
                 500
             );
-        }    
+        }
     }
 }
