@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             OrderStatusSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,
-            OptionSeeder::class
+            OptionSeeder::class,
+            SliderSeeder::class
         ]);
     }
 }

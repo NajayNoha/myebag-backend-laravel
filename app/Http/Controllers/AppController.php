@@ -11,6 +11,7 @@ use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\SizeType;
 use App\Models\OrderStatus;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -23,6 +24,7 @@ class AppController extends Controller
         $colors = Color::all();
         $options = Option::all();
         $orderStatuses = OrderStatus::all();
+        $sliders = Slider::where('active', 1)->get();
         // $categories = Category::with(['products' => [ 'images', 'variations' => [ 'size', 'color' ] ]])->get();
         $featured = Category::has('products')->with(['products' => [ 'images', 'category', 'variations' ]])->get();
 
@@ -32,7 +34,7 @@ class AppController extends Controller
                 'options' => $options,
                 'sizes' => $sizes,
                 'colors' => $colors,
-                // 'categories' => $categories,
+                'sliders' => $sliders,
                 'featured' => $featured,
                 'order_statuses' => $orderStatuses
             ]
@@ -49,6 +51,7 @@ class AppController extends Controller
         $orderStatuses = OrderStatus::all();
         $categories = Category::latest()->get();
         $options = Option::all();
+        $sliders = Slider::all();
         // $featured = Category::has('products')->with(['products' => [ 'images', 'category', 'variations' ]])->get();
 
         return response()->json([
@@ -60,6 +63,7 @@ class AppController extends Controller
                 'categories' => $categories,
                 'products' => $products,
                 'users' => $users,
+                'sliders' => $sliders,
                 'order_statuses' => $orderStatuses
             ]
             ]);

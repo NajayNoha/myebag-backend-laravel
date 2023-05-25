@@ -91,7 +91,7 @@ class CategoryController extends Controller
             // get extension
             $extention = $request->file('image')->getClientOriginalExtension();
             // generate unique name
-            $image_name = substr(Str::slug($request->name), 0, 20) . '-' . uniqid() . '.' . $extention;
+            $image_name = substr(Str::slug($request->name), 0, 20) . '.' . $extention;
             // store file to storage/images/categories/image_name
             $path = Storage::disk('public')->putFileAs('images/categories', $request->file('image'), $image_name);
 

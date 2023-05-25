@@ -15,6 +15,7 @@ use App\Http\Controllers\OptionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderStatusController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserAdressController;
 use App\Http\Controllers\UserController;
@@ -135,3 +136,8 @@ Route::post("/options", [OptionController::class, "store"]);
 Route::post("/options/updateMany", [OptionController::class, "updateMany"]);
 // Route::post("/options/{id}", [OptionController::class, "edit"]);
 Route::delete("/options/{id}", [OptionController::class, "destroy"]);
+
+
+Route::post('/sliders/{id}/active', [SliderController::class, 'setActive']);
+Route::post('/sliders', [SliderController::class, 'store']);
+Route::delete('/sliders/{id}', [SliderController::class, 'destroy']);
