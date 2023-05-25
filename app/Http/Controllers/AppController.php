@@ -72,14 +72,14 @@ class AppController extends Controller
     }
     public function testEmail(){
         try{
-            $user = User::create([
-                'firstname'=> 'nohayla2',
-                'lastname'=> 'najay1',
-                'email'=> 'nohanajayy@gmail.com',
-                'telephone'=> 7272753537,
-                'password'=>'dshiofhfzzzer'
-            ]);
-            Mail::to('najaynohayla@gmail.com')->send(new OrdersMail($user));
+            // $user = User::create([
+            //     'firstname'=> 'nohayla2',
+            //     'lastname'=> 'najay1',
+            //     'email'=> 'nohanajayy@gmail.com',
+            //     'telephone'=> 7272753537,
+            //     'password'=>'dshiofhfzzzer'
+            // ]);
+            // Mail::to('najaynohayla@gmail.com')->send(new OrdersMail($user));
             // toggle new order event
             // event(new NewOrder($order));
 

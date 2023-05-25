@@ -19,10 +19,7 @@ class OrdersMail extends Mailable
      * @return void
      */
     public function __construct(
-        public $user,
-        public $order_items,
-        // public $details,
-        // public $payment_detail
+        public $data
         )
     {
         //
@@ -68,7 +65,7 @@ class OrdersMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.orders.OrdersStatus');
+        return $this->view('emails.orders.orderVerification');
     }
     /**
      * Get the attachments for the message.

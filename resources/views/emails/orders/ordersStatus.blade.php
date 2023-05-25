@@ -1,38 +1,32 @@
 @component('mail::message')
-{{-- Header --}}
-{{-- @slot('header')
-    @component('mail::header', ['url' => config('app.url')])
-        {{ config('app.name') }}
-    @endcomponent
-@endslot --}}
 
 {{-- Body --}}
-# Order Status Update
+{{-- # Order Status Update --}}
 <h1>Order passed</h1>
 <p>Dear {{ $user->lastname }} {{ $user->firstname }} ,</p>
 
-{{-- <p>We wanted to inform you about the status of your order with order number: <strong>{{ $orderNumber }}</strong>.</p> --}}
+<p>We wanted to inform you about the status of your order with order number: <strong>{{ $this->details->order_detail->id }}</strong>.</p>
 
-{{-- <p><strong>Order Status:</strong> {{   $this->details->order_status->name }}</p> --}}
+<p><strong>Order Status:</strong> {{   $this->details->order_status->name }}</p>
 
 <p><strong>Order Details:</strong></p>
 <ul>
-    {{-- @foreach($order_items as $item)
+    @foreach($order_items as $item)
         <li>{{ $item['name'] }} ({{ $item['quantity'] }})</li>
-    @endforeach --}}
+    @endforeach
     <li>items</li>
 </ul>
 {{-- Action Button --}}
-{{-- @isset($viewOrderUrl)
+@isset($viewOrderUrl)
     @component('mail::button', ['url' => $viewOrderUrl, 'color' => 'primary'])
         View Order Details
     @endcomponent
-@endisset --}}
+@endisset
 
 {{-- Footer --}}
-{{-- @slot('footer')
+@slot('footer')
     @component('mail::footer')
         © {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
     @endcomponent
 @endslot
-@endcomponent --}}
+@endcomponent

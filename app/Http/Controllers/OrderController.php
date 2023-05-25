@@ -103,11 +103,13 @@ class OrderController extends Controller
             $data = $request->all();
 
             if ($order_detail) {
+                $items = [];
                 foreach ($data['items'] as $item) {
                     $orderItem = new OrderItem();
                     $orderItem->product_variation_id = $item['product_variation_id'];
                     $orderItem->quantity = $item['quantity'];
                     $orderItem->order_detail_id = $order_detail->id;
+                    array_push($items);
                     $orderItem->save();
                 }
             }
@@ -122,16 +124,27 @@ class OrderController extends Controller
             }
 
             $details = [
+                'id'=> $order_detail->id,
                 "total" => $request->total,
                 "order_status" => OrderStatus::find(1),
-                "shipping_address" => $address
+                "shipping_address" => $address,
+                'order_details'=> $order_detail
             ];
 
             // $order = OrderDetail::with(['user', 'order_items' => ['product_variation' => ['product.images']], 'payment_detail', 'order_status', 'order_status_user', 'shipping_address'])->where('id', $order_detail->id)->first();
-
+            $user = User::find($request->user()->id);
+            $email_data = [
+                'user' => $user,
+                'order_details' => $details,
+                'order_items'=> $data['items'],
+                'payment_details'=> $payment_details,
+                'order_url' => 'http://localhost:8080/orders'
+            ];
             // mailling the user to tell him about his order
             // Mail::to(auth()->user()->email)->send(new OrdersMail(auth()->user(), $data['items'], $details,  $payment_details ));
-            Mail::to($request->user()->email)->send(new OrdersMail());
+            // Mail::to($user->email)->send(new OrdersMail($user, $data['items'], $details,  $payment_details, 'http://localhost:8080/orders'))->subject('Create Order On MyEbag')->from('MyEbag');
+            // Mail::to($user->email)->send(new OrdersMail($email_data)); //, $data['items'], $details
+            Mail::to($user->email)->send(new OrdersMail($email_data))->subject('Create Order On MyEbag')->from('MyEbag');
             // toggle new order event
             // event(new NewOrder($order));
 
