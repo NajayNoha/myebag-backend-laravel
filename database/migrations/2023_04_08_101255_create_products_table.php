@@ -25,6 +25,8 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories');
             $table->foreignId('size_type_id')->constrained('size_types');
             $table->unsignedBigInteger('discount_id')->nullable();
+            $table->integer('discount_percentage')->default(0)->nullable();
+            $table->boolean('is_discount_active')->default(false);
 
             $table->timestamps();
             // $table->foreign('size_type_id')->references('id')->on('size_types')->onDelete('cascade');

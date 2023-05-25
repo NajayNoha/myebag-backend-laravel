@@ -11,7 +11,7 @@ use Stripe\Stripe as StripeGateway;
 class StripeController extends Controller
 {
     public function initiatePayment(Request $request) {
-        $secrect_key = env('STRIPE_SECRET_KEY', null);
+        $secrect_key = env('STRIPE_TEST_SECRET_KEY', null);
 
         StripeGateway::setApiKey($secrect_key);
 

@@ -18,6 +18,8 @@ class Product extends Model
         'size_type_id',
         'gender',
         'discount_id',
+        'discount_percentage',
+        'is_discount_active'
     ];
 
     protected $casts = [
