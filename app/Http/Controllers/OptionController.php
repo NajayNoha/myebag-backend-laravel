@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Option;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class OptionController extends Controller
 {
@@ -124,6 +125,20 @@ class OptionController extends Controller
                 $newOptions[] = $option;
             }
 
+            if($request->hasLogo == 'true') {
+
+                // return $request->file('logos');
+                    $extention = $request->file('logos')['light']->getClientOriginalExtension();
+                    if($extention == 'svg') {
+
+                        // generate unique name
+                        $image_name = 'logo.svg';
+                        // store file to storage/images/categories/image_name
+                        $path = Storage::disk('public')->putFileAs('images/logos', $request->file('logos')['light'], $image_name);
+                    }
+
+            }
+
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
@@ -142,6 +157,7 @@ class OptionController extends Controller
             );
         }
     }
+
 
     public function destroy(Request $request, $id) {
         try{

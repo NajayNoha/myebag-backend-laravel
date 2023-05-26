@@ -101,6 +101,51 @@ class OptionSeeder extends Seeder
                 'option_name' => 'logo_light',
                 'option_value' => '',
             ],
+            [
+                'id' => 18,
+                'option_name' => 'primary_color_name',
+                'option_value' => "violet",
+            ],
+            [
+                'id' => 19,
+                'option_name' => 'primary_color_main',
+                'option_value' => "#8b5cf6",
+            ],
+            [
+                'id' => 20,
+                'option_name' => 'primary_color_light',
+                'option_value' => "#8b5cf6",
+            ],
+            [
+                'id' => 21,
+                'option_name' => 'primary_color_dark',
+                'option_value' => "#a78bfa",
+            ],
+            [
+                'id' => 22,
+                'option_name' => 'secondary_color_name',
+                'option_value' => "emerald",
+            ],
+            [
+                'id' => 23,
+                'option_name' => 'secondary_color_main',
+                'option_value' => "#10b981",
+            ],
+            [
+                'id' => 24,
+                'option_name' => 'secondary_color_light',
+                'option_value' => "#10b981",
+            ],
+            [
+                'id' => 25,
+                'option_name' => 'secondary_color_dark',
+                'option_value' => "#34d399",
+            ],
+            [
+                'id' => 26,
+                'option_name' => 'logo_width',
+                'option_value' => 28,
+            ],
         ];
 
         foreach($options as $option) {

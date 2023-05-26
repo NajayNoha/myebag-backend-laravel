@@ -159,7 +159,7 @@ class ProductController extends Controller
                     $extension = $file->getClientOriginalExtension();
 
                     // set image name
-                    $image_name = 'product_' .$order .'_' . time().'.' . $extension;
+                    $image_name = 'product_' . $product->id . '_' .$order .'.' . $extension;
 
                     // path where image should be saved | add product id to it.
                     $path_to_save = 'images/products/' . $product->id;
@@ -238,41 +238,29 @@ class ProductController extends Controller
                     'message' => 'Product Does Not Exist'
                 ], 404);
             }
-            // $validateProduct = Validator::make($request->all(),
-            // [
-            //     'name' => 'required',
-            //     'sku'=> 'required|unique:product,sku',
-            //     'description' => 'required',
-            //     'images' => 'required',
-            //     'size_type'=>'required',
-            //     'size_values'=>'required',
-            //     'price'=>'required',
-            //     'quantity'=>'required',
-            //     'category'=>'required',
-            //     'stock_alert' => 'required',
-            //     'discount' => 'required',
-            // ], [
-            //     'name.required'=>'the product name is required',
-            //     'sku.required'=>'the product sku is required',
-            //     'sku.unique'=> 'the sku must be unique ',
-            //     'category.required'=>'the product must have a category',
-            //     'size_type.required'=>'please set wish size system you are using',
-            //     'size_values.required'=>'the product must have sizes',
-            //     'price.required'=>'the product must have a price',
-            //     'quantity.required'=>'please set the quantity of the product',
-            //     'stock_alert.required'=>'please set a stock alert ',
-            //     'disount.required'=>'the discount is required',
-            //     'images.required'=>'the product images are required',
-            // ]);
+            $validateProduct = Validator::make($request->all(),
+            [
+                'name' => 'required',
+                'description' => 'required',
+                'size_type_id'=>'required',
+                'category_id'=>'required',
+                'stock_alert' => 'required',
+            ], [
+                'name.required'=>'the product name is required',
+                'name.description'=>'the product name is required',
+                'category.required'=>'the product must have a category',
+                'size_type_id.required'=>'please set wish size system you are using',
+                'stock_alert.required'=>'please set a stock alert ',
+            ]);
 
-            // if ($validateProduct->fails()){
-            //     return response()->json([
-            //         'status' => false,
-            //         'code' => 'VALIDATION_ERROR',
-            //         'errors' => $validateProduct->errors(),
-            //         'messages'=> $validateProduct->messages(),
-            //     ], 405);
-            // }
+            if ($validateProduct->fails()){
+                return response()->json([
+                    'status' => false,
+                    'code' => 'VALIDATION_ERROR',
+                    'errors' => $validateProduct->errors(),
+                    'messages'=> $validateProduct->messages(),
+                ], 405);
+            }
 
             $product->name = $request->name;
             $product->description = $request->description;
@@ -284,6 +272,8 @@ class ProductController extends Controller
             $product->discount_percentage = $request->discount_percentage;
             $product->is_discount_active = $request->is_discount_active == 'true' ? 1 : 0;
             $product->save();
+
+
 
             return response()->json([
                 'status' => true,
