@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Product;
 use App\Events\NewOrder;
 use App\Mail\OrdersMail;
 use App\Models\OrderItem;
 use App\Models\UserAdress;
 use App\Models\OrderDetail;
 use App\Models\OrderStatus;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Models\PaymentDetail;
+use App\Models\ProductVariation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -83,7 +86,7 @@ class OrderController extends Controller
             }
 
             $address = [
-                'user_id' => auth()->id(),
+                'user_id' => $request->user()->id,
                 'adress_line1' => $request->shipping_address['address_line_1'],
                 'adress_line2' => $request->shipping_address['address_line_2'],
                 'city' => $request->shipping_address['city'],
@@ -103,13 +106,11 @@ class OrderController extends Controller
             $data = $request->all();
 
             if ($order_detail) {
-                $items = [];
                 foreach ($data['items'] as $item) {
                     $orderItem = new OrderItem();
                     $orderItem->product_variation_id = $item['product_variation_id'];
                     $orderItem->quantity = $item['quantity'];
                     $orderItem->order_detail_id = $order_detail->id;
-                    array_push($items);
                     $orderItem->save();
                 }
             }
@@ -122,45 +123,36 @@ class OrderController extends Controller
                 $payment_details->status = $payment['status'];
                 $payment_details->save();
             }
-
-            $details = [
-                'id'=> $order_detail->id,
-                "total" => $request->total,
-                "order_status" => OrderStatus::find(1),
-                "shipping_address" => $address,
-                'order_details'=> $order_detail
-            ];
+            $details = OrderDetail::with(['order_items'=> ['product_variation'], 'order_status', ])->where('id', $order_detail->id)->first();
 
             // $order = OrderDetail::with(['user', 'order_items' => ['product_variation' => ['product.images']], 'payment_detail', 'order_status', 'order_status_user', 'shipping_address'])->where('id', $order_detail->id)->first();
-            $user = User::find($request->user()->id);
+            // $user = User::find($request->user()->id);
             $email_data = [
-                'user' => $user,
+                'user' => $request->user(),
                 'order_details' => $details,
-                'order_items'=> $data['items'],
+                'address'=> $address,
                 'payment_details'=> $payment_details,
                 'order_url' => 'http://localhost:8080/orders'
             ];
-            // mailling the user to tell him about his order
-            // Mail::to(auth()->user()->email)->send(new OrdersMail(auth()->user(), $data['items'], $details,  $payment_details ));
-            // Mail::to($user->email)->send(new OrdersMail($user, $data['items'], $details,  $payment_details, 'http://localhost:8080/orders'))->subject('Create Order On MyEbag')->from('MyEbag');
-            // Mail::to($user->email)->send(new OrdersMail($email_data)); //, $data['items'], $details
-            Mail::to($user->email)->send(new OrdersMail($email_data))->subject('Create Order On MyEbag')->from('MyEbag');
-            // toggle new order event
-            // event(new NewOrder($order));
+            Mail::to($request->user()->email)->send(new OrdersMail($email_data));
 
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'order_detail' => $order_detail,
+                    'user' => $request->user(),
+                    'order_detail' => $details,
+                    // 'items' =>
                     ]
             ], 200);
         }catch(\Throwable $th){
+            $user = User::find(auth()->id());
             return response()->json(
                 [
                     'status' => false,
                     'message' => $th->getMessage(),
                     'code' => 'SERVER_ERROR'
+
                 ],
                 500
             );

@@ -10,7 +10,9 @@ use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\SizeType;
 use App\Models\OrderStatus;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use App\Models\ProductVariation;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -79,17 +81,25 @@ class AppController extends Controller
             //     'telephone'=> 7272753537,
             //     'password'=>'dshiofhfzzzer'
             // ]);
-            // Mail::to('najaynohayla@gmail.com')->send(new OrdersMail($user));
+            // Mail::to($user->email)->send(new OrdersMail($user));
+            // ->subject('Create Order On MyEbag')->from('MyEbag');
+            // Mail::to($user->email)->send(new OrdersMail($email_data))->subject('Create Order On MyEbag')->from('MyEbag')
             // toggle new order event
             // event(new NewOrder($order));
+            // $variation = ProductVariation::find(1);
+            // $image = ProductImage::where(['product_id'=>1, 'order'=>1])->get();
+            $name = Product::where(['id' => 1])->with(['images','variations'])->first();
+            // $name = Product::find(1)->images()->limit(1);
+            $i = $name->images->where('order', 1)->first();
 
-            return response()->json([
+            // array_push($items, $i);
+           echo '<pre>';
+           print_r([
                 'status' => true,
                 'code' => 'SUCCESS',
-                'data' => [
-                    'order_detail' => '$order_detail',
-                    ]
-            ], 200);
+                'data' => $i->path]);
+           echo '</pre>';
+
         }
         catch(\Throwable $th) {
             return response()->json(
