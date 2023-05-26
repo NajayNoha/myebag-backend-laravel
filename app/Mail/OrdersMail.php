@@ -22,7 +22,7 @@ class OrdersMail extends Mailable
         public $data
         )
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -65,7 +65,11 @@ class OrdersMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.orders.orderVerification');
+        return $this->view('emails.orders.orderVerification')->with(
+            [
+                'data' => $this->data
+            ]
+        );
     }
     /**
      * Get the attachments for the message.
