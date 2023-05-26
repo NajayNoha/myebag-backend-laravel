@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Color;
+use App\Models\Option;
 use App\Models\Product;
 use App\Mail\OrdersMail;
 use App\Models\CartItem;
@@ -11,6 +12,7 @@ use App\Models\Category;
 use App\Models\SizeType;
 use App\Models\OrderStatus;
 use App\Models\ProductImage;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 use App\Models\ProductVariation;
 use Illuminate\Support\Facades\Hash;
@@ -22,16 +24,19 @@ class AppController extends Controller
     public function index() {
         $sizes = SizeType::with('sizes')->get();
         $colors = Color::all();
+        $options = Option::all();
         $orderStatuses = OrderStatus::all();
+        $sliders = Slider::where('active', 1)->get();
         // $categories = Category::with(['products' => [ 'images', 'variations' => [ 'size', 'color' ] ]])->get();
         $featured = Category::has('products')->with(['products' => [ 'images', 'category', 'variations' ]])->get();
 
         return response()->json([
             'code' => 'SUCCESS',
             'data' => [
+                'options' => $options,
                 'sizes' => $sizes,
                 'colors' => $colors,
-                // 'categories' => $categories,
+                'sliders' => $sliders,
                 'featured' => $featured,
                 'order_statuses' => $orderStatuses
             ]
@@ -47,16 +52,20 @@ class AppController extends Controller
         $products = Product::with($product_relationships)->latest()->get();
         $orderStatuses = OrderStatus::all();
         $categories = Category::latest()->get();
+        $options = Option::all();
+        $sliders = Slider::all();
         // $featured = Category::has('products')->with(['products' => [ 'images', 'category', 'variations' ]])->get();
 
         return response()->json([
             'code' => 'SUCCESS',
             'data' => [
+                'options' => $options,
                 'sizes' => $sizes,
                 'colors' => $colors,
                 'categories' => $categories,
                 'products' => $products,
                 'users' => $users,
+                'sliders' => $sliders,
                 'order_statuses' => $orderStatuses
             ]
             ]);

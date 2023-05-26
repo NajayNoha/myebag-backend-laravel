@@ -11,9 +11,11 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderStatusController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserAdressController;
 use App\Http\Controllers\UserController;
@@ -55,6 +57,8 @@ Route::delete("/categories/{id}", [CategoryController::class, "destroy"]);
 
 
 Route::get("/users", [UserController::class, "index"]);
+Route::post("/users/update/info", [UserController::class, "editInfo"]);
+Route::post("/users/update/password", [UserController::class, "editPassword"]);
 Route::get("/users/{id}", [UserController::class, "show"]);
 Route::post("/users", [UserController::class, "store"]);
 Route::post("/users/{id}", [UserController::class, "edit"]);
@@ -124,3 +128,16 @@ Route::post('payment/initiate', [StripeController::class, 'initiatePayment']);
 Route::post('payment/complete', [StripeController::class, 'completePayment']);
 Route::post('payment/failure', [StripeController::class, 'failPayment']);
 
+
+
+Route::get("/options", [OptionController::class, "index"]);
+Route::get("/options/{id}", [OptionController::class, "show"]);
+Route::post("/options", [OptionController::class, "store"]);
+Route::post("/options/updateMany", [OptionController::class, "updateMany"]);
+// Route::post("/options/{id}", [OptionController::class, "edit"]);
+Route::delete("/options/{id}", [OptionController::class, "destroy"]);
+
+
+Route::post('/sliders/{id}/active', [SliderController::class, 'setActive']);
+Route::post('/sliders', [SliderController::class, 'store']);
+Route::delete('/sliders/{id}', [SliderController::class, 'destroy']);

@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use Illuminate\Support\Str;
+use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class CategoryController extends Controller
+class OptionController extends Controller
 {
     public function index() {
         try{
-            $categories = Category::all();
+            $options = Option::all();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'categories' => $categories
-                ],
+                    'options' => $options
+                    ]
             ], 200);
         }catch(\Throwable $th){
             return response()->json(
@@ -31,23 +30,22 @@ class CategoryController extends Controller
             );
         }
     }
-
     public function show($id) {
         try{
-            $category = Category::find($id);
-            if (!isset($category)){
+            $option = Option::find($id);
+            if (!isset($option)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'Category Does Not Exist'
+                    'message' => 'Option Does Not Exist'
                 ], 404);
             }
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => Category::where('id', $id)->with(['products' => ['images', 'category', 'variations']])->first()
-                ],
+                    'option' => $option
+                ]
             ], 200);
         }catch(\Throwable $th){
             return response()->json(
@@ -63,49 +61,28 @@ class CategoryController extends Controller
 
     public function store(Request $request) {
         try{
-            $validateCategory = Validator::make($request->all(),
+            $validateOption = Validator::make($request->all(),
             [
-                'name' => 'required',
-                'description' => 'required',
-                'image' => 'required|mimes:jpg,png,webp,jpeg'
+                'option_name' => 'required',
+                // 'option_value' => 'required',
             ]);
 
-            if ($validateCategory->fails()){
+            if ($validateOption->fails()){
                 return response()->json([
                     'status' => false,
                     'code' => 'VALIDATION_ERROR',
-                    'errors' => $validateCategory->errors()
+                    'errors' => $validateOption->errors()
                 ], 405);
             }
-
-            // if(!$request->has('image')) {
-            //     return response()->json([
-            //         'status' => true,
-            //         'code' => 'VALIDATION_ERROR',
-            //         'errors' => [
-            //             'image' => 'Image not uploaded'
-            //         ]
-            //     ], 405);
-            // }
-
-            // get extension
-            $extention = $request->file('image')->getClientOriginalExtension();
-            // generate unique name
-            $image_name = substr(Str::slug($request->name), 0, 20) . '.' . $extention;
-            // store file to storage/images/categories/image_name
-            $path = Storage::disk('public')->putFileAs('images/categories', $request->file('image'), $image_name);
-
-            $category = Category::create([
-                "name"=>$request->name,
-                "description"=>$request->description,
-                "image"=> 'storage/' . $path
+            $option = Option::create([
+                "option_name"=>$request->option_name,
+                "option_value"=>$request->option_value,
             ]);
-
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category,
+                    'option' => $option,
                     ]
             ], 200);
         }catch(\Throwable $th){
@@ -120,26 +97,54 @@ class CategoryController extends Controller
         }
     }
 
-    public function edit(Request $request, $id) {
+
+    public function updateMany(Request $request) {
         try{
-            $category = Category::find($id);
-            if (!isset($category)){
+            $validateOption = Validator::make($request->all(),
+            [
+                'options' => 'required',
+            ]);
+
+            if ($validateOption->fails()){
                 return response()->json([
                     'status' => false,
-                    'code' => 'NOT_FOUND',
-                    'message' => 'Category Does Not Exist'
-                ], 404);
+                    'code' => 'VALIDATION_ERROR',
+                    'errors' => $validateOption->errors()
+                ], 405);
             }
-            $category->name = $request->name;
-            $category->description = $request->description;
-            $category->image = $request->image;
-            $category->save();
+
+            $options = $request->options;
+            $newOptions = [];
+            foreach($options as $o) {
+                $option = Option::where('option_name', $o['option_name'])->first();
+
+                if(!$option) continue;
+
+                $option->option_value = $o['option_value'];
+                $option->save();
+                $newOptions[] = $option;
+            }
+
+            if($request->hasLogo == 'true') {
+
+                // return $request->file('logos');
+                    $extention = $request->file('logos')['light']->getClientOriginalExtension();
+                    if($extention == 'svg') {
+
+                        // generate unique name
+                        $image_name = 'logo.svg';
+                        // store file to storage/images/categories/image_name
+                        $path = Storage::disk('public')->putFileAs('images/logos', $request->file('logos')['light'], $image_name);
+                    }
+
+            }
+
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category
-                ]
+                    'options' => $newOptions,
+                    ]
             ], 200);
         }catch(\Throwable $th){
             return response()->json(
@@ -153,22 +158,23 @@ class CategoryController extends Controller
         }
     }
 
+
     public function destroy(Request $request, $id) {
         try{
-            $category = Category::find($id);
-            if (!isset($category)){
+            $option = Option::find($id);
+            if (!isset($option)){
                 return response()->json([
                     'status' => false,
                     'code' => 'NOT_FOUND',
-                    'message' => 'Category Does Not Exist'
+                    'message' => 'Option Does Not Exist'
                 ], 404);
             }
-            $category->delete();
+            $option->delete();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'category' => $category
+                    'option' => $option
                 ]
             ], 200);
         }catch(\Throwable $th){

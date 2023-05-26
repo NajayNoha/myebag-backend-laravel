@@ -89,6 +89,7 @@ class LoginController extends Controller
                 'telephone' => '',
                 'is_admin' => 0,
                 'is_active' => 1,
+                'avatar' => 2,
                 'google_id' => $jwt['sub'],
                 'google_jwt' => json_encode($jwt),
             ]);

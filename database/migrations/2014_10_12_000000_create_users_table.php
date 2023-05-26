@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('telephone')->nullable();
+            $table->string('avatar')->default(2);
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_active')->default(true);
             $table->string('google_id')->nullable();

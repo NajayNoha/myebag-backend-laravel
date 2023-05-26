@@ -29,7 +29,8 @@ class ProductController extends Controller
         try{
             $relationships = ['variations' => ['size', 'color'], 'images', 'category', 'size_type.sizes'];
 
-            $products = Product::latest()->orderBy('id', 'DESC')->with($relationships)->get()
+            // $products = Product::latest()->orderBy('id', 'DESC')->with($relationships)->get()
+            $products = Product::with($relationships)->get()
             ->map(fn($p) => ProductHelper::with_state($p));
 
             return response()->json([
@@ -130,6 +131,8 @@ class ProductController extends Controller
             $product->has_colors = $request->has_colors ? 1 : 0;
             $product->same_price = $request->same_price ? 1 : 0;
             $product->discount_id = $request->has('discount_id') ? $request->discount_id : '';
+            $product->discount_percentage = $request->discount_percentage;
+            $product->is_discount_active = $request->is_discount_active;
             $product->save();
             if ($request->has('product_variations')) {
                 foreach ($request->product_variations as $pvr) {
@@ -156,7 +159,7 @@ class ProductController extends Controller
                     $extension = $file->getClientOriginalExtension();
 
                     // set image name
-                    $image_name = 'product_' .$order .'_' . time().'.' . $extension;
+                    $image_name = 'product_' . $product->id . '_' .$order .'.' . $extension;
 
                     // path where image should be saved | add product id to it.
                     $path_to_save = 'images/products/' . $product->id;
@@ -238,28 +241,16 @@ class ProductController extends Controller
             $validateProduct = Validator::make($request->all(),
             [
                 'name' => 'required',
-                'sku'=> 'required|unique:product,sku',
                 'description' => 'required',
-                'images' => 'required',
-                'size_type'=>'required',
-                'size_values'=>'required',
-                'price'=>'required',
-                'quantity'=>'required',
-                'category'=>'required',
+                'size_type_id'=>'required',
+                'category_id'=>'required',
                 'stock_alert' => 'required',
-                'discount' => 'required',
             ], [
                 'name.required'=>'the product name is required',
-                'sku.required'=>'the product sku is required',
-                'sku.unique'=> 'the sku must be unique ',
+                'name.description'=>'the product name is required',
                 'category.required'=>'the product must have a category',
-                'size_type.required'=>'please set wish size system you are using',
-                'size_values.required'=>'the product must have sizes',
-                'price.required'=>'the product must have a price',
-                'quantity.required'=>'please set the quantity of the product',
+                'size_type_id.required'=>'please set wish size system you are using',
                 'stock_alert.required'=>'please set a stock alert ',
-                'disount.required'=>'the discount is required',
-                'images.required'=>'the product images are required',
             ]);
 
             if ($validateProduct->fails()){
@@ -272,38 +263,18 @@ class ProductController extends Controller
             }
 
             $product->name = $request->name;
-            $product->sku = $request->sku;
             $product->description = $request->description;
             $product->stock_alert = $request->stock_alert;
             $product->gender = $request->has('gender') ? $request->gender : 'mix';
             $product->category_id = $request->category_id;
-            $request->has('discount_id') ? $product->discount_id = $request->category_id : '';
-            if ($request->has('product_variations')) {
-                foreach ($request->product_variations as $pvr) {
-                    $pv = new ProductVariation();
-                    $pv->product_id = $product->id;
-                    $pv->size_id = $pvr->size_id;
-                    $pvr->has('color_id') ? $pv->color_id = $pvr->color_id : '';
-                    $pv->quantity = $pvr->quantity;
-                    $pv->price = $pvr->price;
-                    $pv->save();
-                }
-            }
-            if ($request->has('images')) {
-                foreach ($request->images as $image) {
-                    $img = new ProductImage();
-                    $img->id = $image->id;
-                    $image->order = $image->order;
-                    if ($image->hasFile('image1')) {
-                        $file = $image->file('image1');
-                        $extension = $file->getClientOriginalExtension();
-                        $filename = $image->order . '.' . $extension;
-                        $file->storeAs('public/images/products' . $product->sku, $filename);
-                        $img->path = $image->path;
-                    }
-                    $img->save();
-                }
-            }
+            $product->has_colors = $request->has_colors ? 1 : 0;
+            $product->same_price = $request->same_price ? 1 : 0;
+            $product->discount_percentage = $request->discount_percentage;
+            $product->is_discount_active = $request->is_discount_active == 'true' ? 1 : 0;
+            $product->save();
+
+
+
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
@@ -311,6 +282,7 @@ class ProductController extends Controller
                     'product' => $product,
                     ]
             ], 200);
+
         }catch(\Throwable $th){
             return response()->json(
                 [
