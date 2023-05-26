@@ -144,7 +144,7 @@ class OrderController extends Controller
             // Mail::to(auth()->user()->email)->send(new OrdersMail(auth()->user(), $data['items'], $details,  $payment_details ));
             // Mail::to($user->email)->send(new OrdersMail($user, $data['items'], $details,  $payment_details, 'http://localhost:8080/orders'))->subject('Create Order On MyEbag')->from('MyEbag');
             // Mail::to($user->email)->send(new OrdersMail($email_data)); //, $data['items'], $details
-            Mail::to($user->email)->send(new OrdersMail($email_data))->subject('Create Order On MyEbag')->from('MyEbag');
+            // Mail::to($user->email)->send(new OrdersMail($email_data))->subject('Create Order On MyEbag')->from('MyEbag');
             // toggle new order event
             // event(new NewOrder($order));
 
@@ -181,7 +181,22 @@ class OrderController extends Controller
             //     "order_status_id" => 1,
             //     "shipping_address_id" => $address->id
             $order = OrderDetail::find($id);
-            $order->order_status_id = $request->order_status_id;
+
+            if(!isset($order)) {
+                return response()->json([
+                    'status' => false,
+                    'code' => 'NOT_FOUND',
+                    'message' => 'Order Does Not Exist'
+                ], 404);
+            }
+
+            if($request->type == 'admin') {
+                $order->order_status_id = $request->status;
+            }
+            if($request->type == 'user') {
+                $order->user_status_id = $request->status;
+            }
+
             if($order->save()){
                 $order = OrderDetail::with(['user', 'order_items' => ['product_variation.product.images'], 'payment_detail', 'order_status', 'order_status_user', 'shipping_address'])->where('id', $id)->first();
 
@@ -191,6 +206,40 @@ class OrderController extends Controller
                     'data' => [
                         'order' => $order,
                     ]
+                ], 200);
+            }
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
+
+    public function confirmPayment(Request $request, $id) {
+        try{
+
+            $payment = PaymentDetail::find($id);
+
+            if(!isset($payment)) {
+                return response()->json([
+                    'status' => false,
+                    'code' => 'NOT_FOUND',
+                    'message' => 'Order Does Not Exist'
+                ], 404);
+            }
+
+            $payment->status = true;
+
+            if($payment->save()){
+
+                return response()->json([
+                    'status' => true,
+                    'code' => 'SUCCESS',
                 ], 200);
             }
         }catch(\Throwable $th){

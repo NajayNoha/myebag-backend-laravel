@@ -72,6 +72,8 @@ Route::post("/orders/statuses", [OrderStatusController::class, "store"]);
 
 Route::get("/orders", [OrderController::class, "index"]);
 Route::get("/orders/{id}", [OrderController::class, "show"]);
+Route::post("/orders/{id}/status", [OrderController::class, "updateOrderStatus"]);
+Route::post("/orders/{id}/confirmPayment", [OrderController::class, "confirmPayment"]);
 Route::post("/orders", [OrderController::class, "store"]);
 Route::get("/user/orders", [OrderController::class, "showUserOrders"]);
 
