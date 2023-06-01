@@ -66,6 +66,7 @@ Route::post("/users/update/info", [UserController::class, "editInfo"]);
 Route::post("/users/update/password", [UserController::class, "editPassword"]);
 Route::get("/users/{id}", [UserController::class, "show"]);
 Route::post("/users", [UserController::class, "store"]);
+Route::post("/users/switch-role/{id}", [UserController::class, "switchRole"]);
 Route::post("/users/{id}", [UserController::class, "edit"]);
 Route::delete("/users/{id}", [UserController::class, "destroy"]);
 
