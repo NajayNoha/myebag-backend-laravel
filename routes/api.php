@@ -48,6 +48,8 @@ Route::post("auth/login_google", [LoginController::class, "login_google"]);
 Route::get("auth/logout", [LogoutController::class, "logout"]);
 Route::post("/auth/request-reset-password", [ResetPasswordController::class, "requestResetPassword"]);
 Route::post("/auth/reset-password", [ResetPasswordController::class, "resetPassword"]);
+Route::post("/auth/verify-reset-password", [ResetPasswordController::class, "VerifyResetPassword"]);
+Route::post("/auth/update-password", [ResetPasswordController::class, "UpdatePassword"]);
 
 // Route::get("auth/google", [GoogleController::class, "getAuthUrl"]);
 

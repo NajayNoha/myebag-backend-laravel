@@ -61,6 +61,80 @@ class ResetPasswordController extends Controller
                 500
             );
         }
+
+
     }
 
+    public function VerifyResetPassword(Request $request)
+    {
+        try {$token = $request->token ;
+        $user = User::where('verification_token', $token)->first();
+        if($user){
+            return response()->json(
+                [
+                    'status' => true,
+                    'message' => 'user exist',
+                    'code' => 'VALID_TOKEN'
+                ],
+                200
+            );
+        }else {
+            return response()->json(
+                [
+                    'status' => true,
+                    'message' => 'user doesnt exist',
+                    'code' => 'NOT_VALID_TOKEN'
+                ],
+                200
+            );
+        }
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
+    public function UpdatePassword(Request $request)
+    {
+        try {
+            $token = $request->token ;
+            $password = $request->password;
+            $user = User::where('verification_token', $token)->first();
+            if($user){
+                $user->password = Hash::make($password);
+                $user->verification_token = null;
+                return response()->json(
+                    [
+                        'status' => true,
+                        'message' => 'Password has been reset',
+                        'code' => 'SUCCESS'
+                    ],
+                    200
+                );
+            }else {
+                return response()->json(
+                    [
+                        'status' => true,
+                        'message' => 'user doesnt exist',
+                        'code' => 'NOT_VALID_TOKEN'
+                    ],
+                    200
+                );
+            }
+            }catch(\Throwable $th){
+                return response()->json(
+                    [
+                        'status' => false,
+                        'message' => $th->getMessage(),
+                        'code' => 'SERVER_ERROR'
+                    ],
+                    500
+                );
+            }
+    }
 }
