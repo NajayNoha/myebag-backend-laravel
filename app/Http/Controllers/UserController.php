@@ -270,4 +270,28 @@ class UserController extends Controller
             );
         }
     }
+    public function switchRole(Request $request, $id)
+    {
+        try{
+            $is_admin = $request->is_admin ;
+            $user = User::find($id);
+            $user->is_admin = $is_admin == 'true' ? true : false ;
+            return response()->json([
+                'status' => true,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'user' => $user
+                ]
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
 }
