@@ -7,7 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DiscountController;
-use App\Http\Controllers\GoogleController;
+// use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -49,7 +49,7 @@ Route::get("auth/logout", [LogoutController::class, "logout"]);
 Route::post("/auth/request-reset-password", [ResetPasswordController::class, "requestResetPassword"]);
 Route::post("/auth/reset-password", [ResetPasswordController::class, "resetPassword"]);
 
-Route::get("auth/google", [GoogleController::class, "getAuthUrl"]);
+// Route::get("auth/google", [GoogleController::class, "getAuthUrl"]);
 
 
 Route::get("/categories", [CategoryController::class, "index"]);
