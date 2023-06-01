@@ -46,7 +46,7 @@ Route::post("auth/signup", [SignupController::class, "register"]);
 Route::post("auth/login", [LoginController::class, "login"]);
 Route::post("auth/login_google", [LoginController::class, "login_google"]);
 Route::get("auth/logout", [LogoutController::class, "logout"]);
-Route::get("/auth/request-reset-password", [ResetPasswordController::class, "requestResetPassword"]);
+Route::post("/auth/request-reset-password", [ResetPasswordController::class, "requestResetPassword"]);
 Route::post("/auth/reset-password", [ResetPasswordController::class, "resetPassword"]);
 
 Route::get("auth/google", [GoogleController::class, "getAuthUrl"]);
