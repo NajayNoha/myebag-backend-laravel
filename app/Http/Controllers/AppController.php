@@ -15,6 +15,7 @@ use App\Models\ProductImage;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use App\Models\ProductVariation;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -28,7 +29,10 @@ class AppController extends Controller
         $orderStatuses = OrderStatus::all();
         $sliders = Slider::where('active', 1)->get();
         // $categories = Category::with(['products' => [ 'images', 'variations' => [ 'size', 'color' ] ]])->get();
-        $featured = Category::has('products')->with(['products' => [ 'images', 'category', 'variations' ]])->get();
+        $featured = Category::has('products')->with(['products' => function ($query) {
+            $query->with(['images', 'category', 'variations'])
+                ->where('active', 1);
+        }])->get();
 
         return response()->json([
             'code' => 'SUCCESS',
@@ -42,6 +46,8 @@ class AppController extends Controller
             ]
             ]);
     }
+
+
 
     public function dashboard() {
         $product_relationships = ['variations' => ['size', 'color'], 'images', 'category', 'size_type.sizes'];

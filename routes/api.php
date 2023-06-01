@@ -14,6 +14,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderStatusController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StripeController;
@@ -45,6 +46,8 @@ Route::post("auth/signup", [SignupController::class, "register"]);
 Route::post("auth/login", [LoginController::class, "login"]);
 Route::post("auth/login_google", [LoginController::class, "login_google"]);
 Route::get("auth/logout", [LogoutController::class, "logout"]);
+Route::get("/auth/request-reset-password", [ResetPasswordController::class, "requestResetPassword"]);
+Route::post("/auth/reset-password", [ResetPasswordController::class, "resetPassword"]);
 
 Route::get("auth/google", [GoogleController::class, "getAuthUrl"]);
 
@@ -115,8 +118,11 @@ Route::delete("/sizes/{id}", [SizeController::class, "destroy"]);
 
 
 Route::get("/products", [ProductController::class, "index"]);
-Route::get("/products/{id}", [ProductController::class, "show"]);
+Route::get("/products/active", [ProductController::class, "all_active"]);
+Route::get("/products/{id}", [ProductController::class, "show_active"]);
+Route::get("/admin/products/{id}", [ProductController::class, "show"]);
 Route::post("/products", [ProductController::class, "store"]);
+Route::post('/products/{id}/active', [ProductController::class, 'setActive']);
 Route::post("/products/{id}", [ProductController::class, "edit"]);
 Route::delete("/products/{id}", [ProductController::class, "destroy"]);
 

@@ -52,6 +52,34 @@ class ProductController extends Controller
         }
     }
 
+    public function all_active()
+    {
+        try{
+            $relationships = ['variations' => ['size', 'color'], 'images', 'category', 'size_type.sizes'];
+
+            // $products = Product::latest()->orderBy('id', 'DESC')->with($relationships)->get()
+            $products = Product::with($relationships)->where('active', 1)->get()
+            ->map(fn($p) => ProductHelper::with_state($p));
+
+            return response()->json([
+                'status' => true,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'products' => $products
+                ],
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
+
     public function storeImages(Request $request) {
         try {
 
@@ -141,13 +169,12 @@ class ProductController extends Controller
                     $pv->size_id = $pvr['size_id'];
                     $pv->color_id = $pvr['color_id'];
                     $pv->quantity = $pvr['quantity'];
-                    $pv->price = 100;
+                    $pv->price = $pvr['price'];
+                    $pv->buying_price = $pvr['buying_price'];
                     $pv->save();
                 }
             }
             if ($request->has('images')) {
-
-                $images = [];
 
                 foreach ($request->input('images') as $key => $image) {
 
@@ -166,12 +193,11 @@ class ProductController extends Controller
 
                     $path = Storage::disk('public')->putFileAs($path_to_save, $file, $image_name);
 
-                    $stored_image = ProductImage::create([
+                    ProductImage::create([
                         'product_id' => $product->id,
                         'path' => 'storage/' . $path,
                         'order' => $order
                     ]);
-
                 }
             }
 
@@ -199,9 +225,71 @@ class ProductController extends Controller
         }
     }
 
-    public function show($id) {
+    public function setActive(Request $request, $id)
+    {
         try{
             $product = Product::find($id);
+            if(!$product) {
+                return response()->json([
+                    'status' => false,
+                    'code' => 'NOT_FOUND'
+                ]);
+            }
+
+            $product->active = $request->active == 'true' ? 1 : 0;
+            $product->save();
+
+            return response()->json([
+                'status' => true,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'product' => $product,
+                    ]
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
+
+    public function show($id) {
+        try{
+            $product = Product::where([['id', $id]])->first();
+            if (!isset($product)){
+                return response()->json([
+                    'status' => false,
+                    'code' => 'NOT_FOUND',
+                    'message' => 'product Does Not Exist'
+                ], 404);
+            }
+            return response()->json([
+                'status' => true,
+                'code' => 'SUCCESS',
+                'data' => [
+                    'product' => Product::where('id', $id)->with(['category', 'variations' => [ 'size', 'color' ], 'images'])->first()
+                ],
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
+
+    public function show_active($id) {
+        try{
+            $product = Product::where([['id', $id], ['active', 1]])->first();
             if (!isset($product)){
                 return response()->json([
                     'status' => false,
@@ -262,6 +350,8 @@ class ProductController extends Controller
                 ], 405);
             }
 
+            DB::beginTransaction();
+
             $product->name = $request->name;
             $product->description = $request->description;
             $product->stock_alert = $request->stock_alert;
@@ -271,10 +361,65 @@ class ProductController extends Controller
             $product->same_price = $request->same_price ? 1 : 0;
             $product->discount_percentage = $request->discount_percentage;
             $product->is_discount_active = $request->is_discount_active == 'true' ? 1 : 0;
+
+
+            // return $request->deleted_variations;
+            if($request->has('deleted_variations')) {
+                foreach($request->deleted_variations as $d) {
+                    $p = ProductVariation::where([['id', $d], ['product_id', $product->id]])->delete();
+                }
+            }
+
+            if($request->has('new_variations')) {
+                foreach($request->new_variations as $pvr) {
+                    $pv = new ProductVariation();
+                    $pv->product_id = $product->id;
+                    $pv->size_id = $pvr['size_id'];
+                    $pv->color_id = $pvr['color_id'];
+                    $pv->quantity = $pvr['quantity'];
+                    $pv->price = $pvr['price'];
+                    $pv->buying_price = $pvr['buying_price'];
+                    $pv->save();
+                }
+            }
+
+
+            if($request->is_images_dirty == 'true') {
+
+                if ($request->has('images')) {
+
+                    $product->images()->delete();
+
+                    foreach ($request->input('images') as $key => $image) {
+
+                        // Image order
+                        $order = $image['order'];
+
+                        // image file
+                        $file = $request->file('images')[$key]['image'];
+                        $extension = $file->getClientOriginalExtension();
+
+                        // set image name
+                        $image_name = 'product_' . $product->id . '_' .$order .'.' . $extension;
+
+                        // path where image should be saved | add product id to it.
+                        $path_to_save = 'images/products/' . $product->id;
+
+                        $path = Storage::disk('public')->putFileAs($path_to_save, $file, $image_name);
+
+                        ProductImage::create([
+                            'product_id' => $product->id,
+                            'path' => 'storage/' . $path,
+                            'order' => $order
+                        ]);
+                    }
+                }
+            }
+
+
+
             $product->save();
-
-
-
+            DB::commit();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
@@ -284,6 +429,7 @@ class ProductController extends Controller
             ], 200);
 
         }catch(\Throwable $th){
+            DB::rollBack();
             return response()->json(
                 [
                     'status' => false,

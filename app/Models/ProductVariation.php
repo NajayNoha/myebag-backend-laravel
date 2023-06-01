@@ -14,6 +14,7 @@ class ProductVariation extends Model
         'color_id',
         'quantity',
         'price',
+        'buying_price'
     ];
 
     public function product()

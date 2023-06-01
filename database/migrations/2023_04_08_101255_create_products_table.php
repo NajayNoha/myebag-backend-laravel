@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('sku');
             $table->longText('description');
             $table->integer('stock_alert')->default(10);
+            $table->boolean('active')->default(true);
             $table->boolean('has_colors')->default(0)->nullable();
             $table->boolean('same_price')->default(1)->nullable();
             $table->string('gender')->default('mix');

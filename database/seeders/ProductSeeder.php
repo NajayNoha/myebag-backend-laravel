@@ -415,7 +415,8 @@ class ProductSeeder extends Seeder
                     'size_id' => $size,
                     'color_id' => $item['variations']['color'],
                     'quantity' => 30,
-                    'price' => 150
+                    'price' => 150,
+                    'buying_price' => 130
                 ]);
             }
 

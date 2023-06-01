@@ -134,7 +134,7 @@ class OrderController extends Controller
                 'payment_details'=> $payment_details,
                 'order_url' => 'http://localhost:8080/orders'
             ];
-            Mail::to($request->user()->email)->send(new OrdersMail($email_data));
+            // Mail::to($request->user()->email)->send(new OrdersMail($email_data));
 
             return response()->json([
                 'status' => true,

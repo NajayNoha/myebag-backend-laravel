@@ -132,8 +132,18 @@ class CategoryController extends Controller
             }
             $category->name = $request->name;
             $category->description = $request->description;
-            $category->image = $request->image;
+            if($request->isDirty == 'true') {
+                $extention = $request->file('image')->getClientOriginalExtension();
+                // generate unique name
+                $image_name = substr(Str::slug($request->name), 0, 20) . '.' . $extention;
+                // store file to storage/images/categories/image_name
+                $path = Storage::disk('public')->putFileAs('images/categories', $request->file('image'), $image_name);
+
+                $category->image = 'storage/' . $path;
+            }
+
             $category->save();
+
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',

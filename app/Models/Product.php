@@ -19,7 +19,8 @@ class Product extends Model
         'gender',
         'discount_id',
         'discount_percentage',
-        'is_discount_active'
+        'is_discount_active',
+        'active'
     ];
 
     protected $casts = [

@@ -136,34 +136,31 @@
 															<tr>
 																<td valign="top"
 																	style="border-bottom: 1px solid #c0c0c0;">&nbsp;
-																</td>
+                                                                    <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
+                                                                    ui="" helvetica="" neue="" font-size:=""
+                                                                    line-height:="" color:="" white-space:=""
+                                                                    padding:="">ID</div>
+                                                                </td>
 																<td valign="top"
 																	style="border-bottom: 1px solid #c0c0c0;">&nbsp;
-																</td>
+                                                                    <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
+                                                                    ui="" helvetica="" neue="" font-size:=""
+                                                                    line-height:="" color:="" white-space:=""
+                                                                    padding:="">Name</div>
+                                                                </td>
+
 																<td valign="top" align="right"
 																	style="border-bottom: 1px solid #c0c0c0;">
 																	<div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
 																		ui="" helvetica="" neue="" font-size:=""
 																		line-height:="" color:="" white-space:=""
 																		padding:="">Quantity</div>
-																	<table cellpadding="0" cellspacing="0" border="0"
-																		width="100%">
-																		<tr>
-																			<td height="15"></td>
-																		</tr>
-																	</table>
 																</td>
 																<td valign="top" align="right"
 																	style="border-bottom: 1px solid #c0c0c0;">
 																	<div
 																		style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: line-height: color: white-space: padding:">
 																		Price/piece</div>
-																	<table cellpadding="0" cellspacing="0" border="0"
-																		width="100%">
-																		<tr>
-																			<td height="20"></td>
-																		</tr>
-																	</table>
 																</td>
 															</tr>
                                                         @foreach ($data['order_details']->order_items as $item)
@@ -197,7 +194,7 @@
                                                                     </table>
                                                                     <a href="" target="_blank"
                                                                         style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; line-height: color: text-decoration:">Product/service
-                                                                        {{ $item->product_variation->name }}</a>
+                                                                        {{ $item->product_variation->product->name }}</a>
                                                                     <table cellpadding="0" cellspacing="0" border="0"
                                                                         width="100%">
                                                                         <tr>

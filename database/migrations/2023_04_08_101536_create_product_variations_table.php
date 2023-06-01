@@ -19,7 +19,8 @@ return new class extends Migration
             $table->foreignId('size_id')->constrained('sizes');
             $table->integer('color_id')->nullable();
             $table->integer('quantity')->default(0);
-            $table->integer('price');
+            $table->float('price');
+            $table->float('buying_price');
             $table->timestamps();
         });
     }
