@@ -107,7 +107,7 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
-              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Confirm Your Email Address</h1>
+              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Reset Your Email</h1>
             </td>
           </tr>
         </table>
@@ -126,7 +126,7 @@
           <!-- start copy -->
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">Tap the button below to confirm your email address. If you didn't create an account with <a href="https://myebag.shop">MyEbag</a>, you can safely delete this email.</p>
+              <p style="margin: 0;">Tap the button below to reset your password with <a href="https://myebag.shop">MyEbag</a></p>
             </td>
           </tr>
           <!-- end copy -->
@@ -143,7 +143,7 @@
 
                             {{-- // link must be here  --}}
 
-                            <a href="{{ $data['url'] }}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Do Something Sweet</a>
+                            <a href="{{ $data['url'] }}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Reset Now</a>
                         </td>
                       </tr>
                     </table>

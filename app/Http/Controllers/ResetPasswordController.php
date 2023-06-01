@@ -108,6 +108,7 @@ class ResetPasswordController extends Controller
             if($user){
                 $user->password = Hash::make($password);
                 $user->verification_token = null;
+                $user->save();
                 return response()->json(
                     [
                         'status' => true,
