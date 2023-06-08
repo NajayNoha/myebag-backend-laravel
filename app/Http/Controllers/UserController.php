@@ -275,7 +275,8 @@ class UserController extends Controller
         try{
             $is_admin = $request->is_admin ;
             $user = User::find($id);
-            $user->is_admin = $is_admin == 'true' ? true : false ;
+            $user->is_admin = $is_admin == 'true' ? true : false;
+            $user->save();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
