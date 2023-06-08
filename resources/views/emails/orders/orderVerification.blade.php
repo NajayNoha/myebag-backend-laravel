@@ -49,20 +49,15 @@
 
 <body style="margin: 0; padding: 0;">
     <div style="">
-        <!--<![endif]-->
         <table cellpadding="0" cellspacing="0" border="0" width="100%" style="font-size: 1px; line-height: normal;">
             <tr em="group">
                 <td align="center" bgcolor="AFB7FF" style="background-color: #ffffff;">
-                    <!--[if (gte mso 9)|(IE)]>
-    <table cellpadding="0" cellspacing="0" border="0" width="800"><tr><td>
-    <![endif]-->
+
                     <table cellpadding="0" cellspacing="0" width="100%" border="0"
                         style="max-width: 800px; min-width: 320px; width: 100%;">
                         <tr em="block" class="empty-structure">
                             <td align="center" bgcolor="CCD1FF">
-                                <!--[if (gte mso 9)|(IE)]>
-  <table cellpadding="0" cellspacing="0" border="0" width="660"><tr><td>
-  <![endif]-->
+
                                 <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0"
                                     style="max-width: 660px;">
                                     <tr>
@@ -72,9 +67,7 @@
                                                     <td height="30"></td>
                                                 </tr>
                                             </table>
-                                            <!--[if (gte mso 9)|(IE)]>
-     <table border="0" cellspacing="0" cellpadding="0">
-     <tr><td width="660" valign="top"><![endif]-->
+
                                             <div style="display: inline-block; width: 100%; max-width: 660px; vertical-align: top;"
                                                 class="em-mob-width-100perc">
                                                 <table width="602" border="0" cellspacing="0" cellpadding="0"
@@ -117,149 +110,133 @@
                             </td>
                         </tr>
                         <tr em="block">
-							<td align="center" bgcolor="CCD1FF">
-								<table align="center" cellpadding="0" cellspacing="0" border="0" width="100%"
-									style="max-width: 660px;">
-									<tr>
-										<td align="center" bgcolor="#FFFFFF">
-											<table align="center" cellpadding="0" cellspacing="0" border="0"
-												width="91%">
-												<tr>
-													<td align="left">
-														<table cellpadding="0" cellspacing="0" border="0" width="100%">
-															<tr>
-																<td height="20"></td>
-															</tr>
-														</table>
-														<table align="center" cellpadding="0" cellspacing="0" border="0"
-															width="100%">
-															<tr>
-																<td valign="top"
-																	style="border-bottom: 1px solid #c0c0c0;">&nbsp;
-                                                                    <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
-                                                                    ui="" helvetica="" neue="" font-size:=""
-                                                                    line-height:="" color:="" white-space:=""
-                                                                    padding:="">ID</div>
+                            <td align="center" bgcolor="CCD1FF">
+                                <table align="center" cellpadding="0" cellspacing="0" border="0" width="100%"
+                                    style="max-width: 660px;">
+                                    <tr>
+                                        <td align="center" bgcolor="#FFFFFF">
+                                            <table align="center" cellpadding="0" cellspacing="0" border="0"
+                                                width="91%">
+                                                <tr>
+                                                    <td align="left">
+                                                        <table cellpadding="0" cellspacing="0" border="0"
+                                                            width="100%">
+                                                            <tr>
+                                                                <td height="20"></td>
+                                                            </tr>
+                                                        </table>
+                                                        <table align="center" cellpadding="0" cellspacing="0"
+                                                            border="0" width="100%">
+                                                            <tr>
+                                                                <td valign="top"
+                                                                    style="border-bottom: 1px solid #c0c0c0;">&nbsp;
                                                                 </td>
-																<td valign="top"
-																	style="border-bottom: 1px solid #c0c0c0;">&nbsp;
-                                                                    <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
-                                                                    ui="" helvetica="" neue="" font-size:=""
-                                                                    line-height:="" color:="" white-space:=""
-                                                                    padding:="">Name</div>
+                                                                <td valign="top"
+                                                                    style="border-bottom: 1px solid #c0c0c0;">&nbsp;
                                                                 </td>
-
-																<td valign="top" align="right"
-																	style="border-bottom: 1px solid #c0c0c0;">
-																	<div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
-																		ui="" helvetica="" neue="" font-size:=""
-																		line-height:="" color:="" white-space:=""
-																		padding:="">Quantity</div>
-																</td>
-																<td valign="top" align="right"
-																	style="border-bottom: 1px solid #c0c0c0;">
-																	<div
-																		style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: line-height: color: white-space: padding:">
-																		Price/piece</div>
-																</td>
-															</tr>
-                                                        @foreach ($data['order_details']->order_items as $item)
-                                                            <tr em="atom">
-                                                                <td width="13%"
+                                                                <td valign="top" align="right"
                                                                     style="border-bottom: 1px solid #c0c0c0;">
-                                                                    <table cellpadding="0" cellspacing="0" border="0"
-                                                                        width="100%">
-                                                                        <tr>
-                                                                            <td height="20"></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                    {{-- <a href="" target="_blank"><img
-                                                                            src="{{  }}"
-                                                                            width="60" border="0" alt=""
-                                                                            style="display: inline-block; width: 100%; max-width: 60px;"></a> --}}
-                                                                    <table cellpadding="0" cellspacing="0" border="0"
-                                                                        width="100%">
-                                                                        <tr>
-                                                                            <td height="20"></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                                <td
-                                                                    style="border-bottom: 1px solid #c0c0c0; padding: 0 10px;">
-                                                                    <table cellpadding="0" cellspacing="0" border="0"
-                                                                        width="100%">
-                                                                        <tr>
-                                                                            <td height="20"></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                    <a href="" target="_blank"
-                                                                        style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; line-height: color: text-decoration:">Product/service
-                                                                        {{ $item->product_variation->product->name }}</a>
-                                                                    <table cellpadding="0" cellspacing="0" border="0"
-                                                                        width="100%">
-                                                                        <tr>
-                                                                            <td height="10"></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                                <td align="right"
-                                                                    style="border-bottom: 1px solid #c0c0c0; padding: 0 10px;">
-                                                                    <table cellpadding="0" cellspacing="0" border="0"
-                                                                        width="100%">
-                                                                        <tr>
-                                                                            <td height="20"></td>
-                                                                        </tr>
-                                                                    </table>
                                                                     <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
                                                                         ui="" helvetica="" neue=""
-                                                                        font-size:="" line-height:="" color:="">{{$item->quantity}}
-                                                                    </div>
-                                                                    <table cellpadding="0" cellspacing="0" border="0"
-                                                                        width="100%">
+                                                                        font-size:="" line-height:="" color:=""
+                                                                        white-space:="" padding:="">Quantity</div>
+                                                                    <table cellpadding="0" cellspacing="0"
+                                                                        border="0" width="100%">
+                                                                        <tr>
+                                                                            <td height="15"></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td valign="top" align="right"
+                                                                    style="border-bottom: 1px solid #c0c0c0;">
+                                                                    <div
+                                                                        style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: line-height: color: white-space: padding:">
+                                                                        Price/piece</div>
+                                                                    <table cellpadding="0" cellspacing="0"
+                                                                        border="0" width="100%">
                                                                         <tr>
                                                                             <td height="20"></td>
                                                                         </tr>
                                                                     </table>
                                                                 </td>
-                                                                <td align="right"
-                                                                    style="border-bottom: 1px solid #c0c0c0; padding: 0 10px;">
-                                                                    <table cellpadding="0" cellspacing="0" border="0"
-                                                                        width="100%">
-                                                                        <tr>
-                                                                            <td height="20"></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                    <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
-                                                                        ui="" helvetica="" neue=""
-                                                                        font-size:="" line-height:="" color:="">
-                                                                        {{$item->product_variation->price}}
+                                                            </tr>
+                                                            @foreach ($data['order_details']->order_items as $item)
+                                                                <tr em="atom">
+                                                                    <td width="13%"
+                                                                        style="border-bottom: 1px solid #c0c0c0;">
                                                                         <table cellpadding="0" cellspacing="0"
                                                                             border="0" width="100%">
                                                                             <tr>
                                                                                 <td height="20"></td>
                                                                             </tr>
                                                                         </table>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                                        <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
+                                                                            ui="" helvetica=""
+                                                                            neue="" font-size:=""
+                                                                            line-height:="" color:=""
+                                                                            width="50%">
+                                                                            {{ $item->product_variation->product->name }}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td
+                                                                        style="border-bottom: 1px solid #c0c0c0; padding: 0 10px;">
 
-                                                        @endforeach
+                                                                    </td>
+                                                                    <td align="right"
+                                                                        style="border-bottom: 1px solid #c0c0c0; padding: 0 10px;">
 
-                                                    </table>
-                                                    <table align="center" cellpadding="0" cellspacing="0"
-                                                        border="0" width="100%">
-                                                        <tr>
-                                                            <td align="right">
-                                                                <table cellpadding="0" cellspacing="0" border="0"
-                                                                    width="100%">
-                                                                    <tr>
-                                                                        <td height="10"></td>
-                                                                    </tr>
-                                                                </table>
-                                                                <table cellpadding="0" cellspacing="0"
-                                                                    border="0">
-                                                                    {{-- shipping price --}}
-                                                                    {{-- <tr>
+                                                                        <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
+                                                                            ui="" helvetica=""
+                                                                            neue="" font-size:=""
+                                                                            line-height:="" color:="">
+                                                                            {{ $item->quantity }}
+                                                                        </div>
+                                                                        <table cellpadding="0" cellspacing="0"
+                                                                            border="0" width="100%">
+                                                                            <tr>
+                                                                                <td height="20"></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                    <td align="right"
+                                                                        style="border-bottom: 1px solid #c0c0c0; padding: 0 10px;">
+                                                                        <table cellpadding="0" cellspacing="0"
+                                                                            border="0" width="100%">
+                                                                            <tr>
+                                                                                <td height="20"></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
+                                                                            ui="" helvetica=""
+                                                                            neue="" font-size:=""
+                                                                            line-height:="" color:="">
+                                                                            {{ $item->product_variation->price }}$
+                                                                            <table cellpadding="0" cellspacing="0"
+                                                                                border="0" width="100%">
+                                                                                <tr>
+                                                                                    <td height="20"></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+
+                                                        </table>
+                                                        <table align="center" cellpadding="0" cellspacing="0"
+                                                            border="0" width="100%">
+                                                            <tr>
+                                                                <td align="right">
+                                                                    <table cellpadding="0" cellspacing="0"
+                                                                        border="0" width="100%">
+                                                                        <tr>
+                                                                            <td height="10"></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                    <table cellpadding="0" cellspacing="0"
+                                                                        border="0">
+                                                                        {{-- shipping price --}}
+                                                                        {{-- <tr>
                                                                         <td align="right">
                                                                             <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
                                                                                 ui="" helvetica=""
@@ -293,8 +270,8 @@
 
 
 
-                                                                    {{-- discount  --}}
-                                                                    {{-- <tr>
+                                                                        {{-- discount  --}}
+                                                                        {{-- <tr>
                                                                         <td align="right">
                                                                             <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
                                                                                 ui="" helvetica=""
@@ -325,170 +302,214 @@
                                                                             </div>
                                                                         </td>
                                                                     </tr> --}}
-                                                                    <tr>
-                                                                        <td align="right">
-                                                                            <div
-                                                                                style="font-family: font-family-4remove-0, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: 14px; line-height: 21px; color: #333333;">
-                                                                                <st></st><strong
-                                                                                    style="line-height: 21px; color: #082846;font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;">Total:
+                                                                        <tr>
+                                                                            <td align="right">
+                                                                                <div
+                                                                                    style="font-family: font-family-4remove-0, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: 14px; line-height: 21px; color: #333333;">
+                                                                                    <st></st><strong
+                                                                                        style="line-height: 21px; color: #082846;font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;">Shipment:
+                                                                                        <table cellpadding="0"
+                                                                                            cellspacing="0"
+                                                                                            border="0"
+                                                                                            width="100%">
+                                                                                            <tr>
+                                                                                                <td height="10">
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </strong>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td width="50">&nbsp;</td>
+                                                                            <td align="right">
+                                                                                <div style="font-family: font-family-4remove-0, -apple-system, "
+                                                                                    ui="" helvetica=""
+                                                                                    neue="" font-size:=""
+                                                                                    line-height:="" color:="">
+                                                                                    <st></st><strong
+                                                                                        style="line-height: 21px; color: #082846; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: 14px">
+                                                                                        5$
+                                                                                        <table cellpadding="0"
+                                                                                            cellspacing="0"
+                                                                                            border="0"
+                                                                                            width="100%">
+                                                                                            <tr>
+                                                                                                <td height="10">
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </strong>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="right">
+                                                                                <div
+                                                                                    style="font-family: font-family-4remove-0, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: 14px; line-height: 21px; color: #333333;">
+                                                                                    <st></st><strong
+                                                                                        style="line-height: 21px; color: #082846;font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;">Total:
+                                                                                        <table cellpadding="0"
+                                                                                            cellspacing="0"
+                                                                                            border="0"
+                                                                                            width="100%">
+                                                                                            <tr>
+                                                                                                <td height="10">
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </strong>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td width="50">&nbsp;</td>
+                                                                            <td align="right">
+                                                                                <div style="font-family: font-family-4remove-0, -apple-system, "
+                                                                                    ui="" helvetica=""
+                                                                                    neue="" font-size:=""
+                                                                                    line-height:="" color:="">
+                                                                                    <st></st><strong
+                                                                                        style="line-height: 21px; color: #082846; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: 14px">
+                                                                                        {{ $data['order_details']->total }}$
+                                                                                        <table cellpadding="0"
+                                                                                            cellspacing="0"
+                                                                                            border="0"
+                                                                                            width="100%">
+                                                                                            <tr>
+                                                                                                <td height="10">
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </strong>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="right">
+                                                                                <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
+                                                                                    ui="" helvetica=""
+                                                                                    neue="" font-size:=""
+                                                                                    line-height:="" color:="">
+                                                                                    Paid:<table cellpadding="0"
+                                                                                        cellspacing="0" border="0"
+                                                                                        width="100%">
+                                                                                        <tr>
+                                                                                            <td height="10"></td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td width="50">&nbsp;</td>
+                                                                            <td align="right">
+                                                                                <div style="font-family: font-family-4remove-0, -apple-system, "
+                                                                                    ui="" helvetica=""
+                                                                                    neue="" font-size:=""
+                                                                                    line-height:="" color:="">
+                                                                                    @if ($data['payment_details']->status == true)
+                                                                                        Completed
+                                                                                    @else
+                                                                                        Not paid
+                                                                                    @endif
                                                                                     <table cellpadding="0"
                                                                                         cellspacing="0" border="0"
                                                                                         width="100%">
                                                                                         <tr>
-                                                                                            <td height="10">
-                                                                                            </td>
+                                                                                            <td height="10"></td>
                                                                                         </tr>
                                                                                     </table>
-                                                                                </strong>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td width="50">&nbsp;</td>
-                                                                        <td align="right">
-                                                                            <div style="font-family: font-family-4remove-0, -apple-system, "
-                                                                                ui="" helvetica=""
-                                                                                neue="" font-size:=""
-                                                                                line-height:="" color:="">
-                                                                                <st></st><strong
-                                                                                    style="line-height: 21px; color: #082846; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: 14px">
-                                                                                    {{ $data['order_details']->total }}
-                                                                                    <table cellpadding="0"
-                                                                                        cellspacing="0" border="0"
-                                                                                        width="100%">
-                                                                                        <tr>
-                                                                                            <td height="10">
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                                </strong>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td align="right">
-                                                                            <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
-                                                                                ui="" helvetica=""
-                                                                                neue="" font-size:=""
-                                                                                line-height:="" color:="">
-                                                                                Paid:<table cellpadding="0"
-                                                                                    cellspacing="0" border="0"
-                                                                                    width="100%">
-                                                                                    <tr>
-                                                                                        <td height="10"></td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td width="50">&nbsp;</td>
-                                                                        <td align="right">
-                                                                            <div style="line-height: normal; font-size: 14px; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
-                                                                                ui="" helvetica=""
-                                                                                neue="" font-size:=""
-                                                                                line-height:="" color:="">
-                                                                                @if ($data['payment_details']->status == true)
-                                                                                    Completed
-                                                                                @else
-                                                                                    Not paid
-                                                                                @endif
-                                                                                <table cellpadding="0"
-                                                                                    cellspacing="0" border="0"
-                                                                                    width="100%">
-                                                                                    <tr>
-                                                                                        <td height="10"></td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                            <tr>
-                                                <td height="20"></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                            <!--[if (gte mso 9)|(IE)]>
-       </td></tr></table>
-       <![endif]-->
-                </td>
-            </tr>
-            <tr em="block" class="empty-structure">
-                <td align="center" bgcolor="CCD1FF">
-                    <!--[if (gte mso 9)|(IE)]>
-  <table cellpadding="0" cellspacing="0" border="0" width="660"><tr><td>
-  <![endif]-->
-                    <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0"
-                        style="max-width: 660px;">
-                        <tr>
-                            <td align="center" valign="top">
-                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                    <tr>
-                                        <td height="10"></td>
-                                    </tr>
-                                </table>
-                                <!--[if (gte mso 9)|(IE)]>
-     <table border="0" cellspacing="0" cellpadding="0">
-     <tr><td width="660" valign="top"><![endif]-->
-                                <div style="display: inline-block; width: 100%; max-width: 660px; vertical-align: top;"
-                                    class="em-mob-width-100perc ">
-                                    <table width="602" border="0" cellspacing="0" cellpadding="0"
-                                        style="width: 91%; max-width: 602px;" class="em-mob-width-91perc">
-                                        <tr>
-                                            <td align="left">
-                                                <div em="atom">
-                                                    <table cellpadding="0" cellspacing="0" border="0"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td height="10"></td>
-                                                        </tr>
-                                                    </table>
-                                                    <div
-                                                        style="font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: 16px; line-height: 24px; color: #333333;">
-                                                        <span style="color: #082846;"><strong>Shipping
-                                                                Address</strong>: {{ $data['address']->adress_line1}} {{$data['address']->adress_line2}}</span><br><br><span
-                                                            style="color: #082846;"><strong>Payment
-                                                                Method</strong>: {{ $data['payment_details']->provider }}</span><br><br><span style="color: #082846;">If you
-                                                            have any
-                                                            questions or concerns regarding your order,
-                                                            please feel free to reach out to us via email or
-                                                            phone, and we'll be happy to assist
-                                                            you.</span><br><br><span style="color: #082846;">Best
-                                                            regards,</span><br><br><span style="color: #082846;"> Orders Tracking Teams</span><br><br><span style="color: #082846;">MyEbag</span><br>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                        <tr>
-                                            <td height="20"></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <!--[if (gte mso 9)|(IE)]>
-     </td></tr>
-     </table><![endif]-->
-                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                    <tr>
-                                        <td height="10"></td>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                <tr>
+                                                    <td height="20"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
-                    </table>
-                    <!--[if (gte mso 9)|(IE)]>
+                        <tr em="block" class="empty-structure">
+                            <td align="center" bgcolor="CCD1FF">
+                                <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0"
+                                    style="max-width: 660px;">
+                                    <tr>
+                                        <td align="center" valign="top">
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                <tr>
+                                                    <td height="10"></td>
+                                                </tr>
+                                            </table>
+                                            <div style="display: inline-block; width: 100%; max-width: 660px; vertical-align: top;"
+                                                class="em-mob-width-100perc ">
+                                                <table width="602" border="0" cellspacing="0" cellpadding="0"
+                                                    style="width: 91%; max-width: 602px;" class="em-mob-width-91perc">
+                                                    <tr>
+                                                        <td align="left">
+                                                            <div em="atom">
+                                                                <table cellpadding="0" cellspacing="0" border="0"
+                                                                    width="100%">
+                                                                    <tr>
+                                                                        <td height="10"></td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div
+                                                                    style="font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: 16px; line-height: 24px; color: #333333;">
+                                                                    <span style="color: #082846;"><strong>Shipping Address</strong>:
+                                                                        {{ $data['address']->adress_line1 }}
+                                                                        {{ $data['address']->city }} {{ $data['address']->postal_code }}
+                                                                    </span><br><br>
+                                                                    <span
+                                                                        style="color: #082846;"><strong>Payment
+                                                                            Method</strong>:
+                                                                        {{ $data['payment_details']->provider == 'cod' ? 'cash on delivery' : $data['payment_details']->provider }}</span><br><br><span
+                                                                        style="color: #082846;">If you
+                                                                        have any
+                                                                        questions or concerns regarding your order,
+                                                                        please feel free to reach out to us via email or
+                                                                        phone, and we'll be happy to assist
+                                                                        you.</span><br><br><span
+                                                                        style="color: #082846;">Best
+                                                                        regards,</span><br><br><span
+                                                                        style="color: #082846;"> Orders Tracking
+                                                                        Teams</span><br><br><span
+                                                                        style="color: #082846;">MyEbag</span><br>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <table cellpadding="0" cellspacing="0" border="0"
+                                                    width="100%">
+                                                    <tr>
+                                                        <td height="20"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <!--[if (gte mso 9)|(IE)]>
+     </td></tr>
+     </table><![endif]-->
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                <tr>
+                                                    <td height="10"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!--[if (gte mso 9)|(IE)]>
   </td></tr></table>
   <![endif]-->
-                </td>
-            </tr>
-            {{-- <tr em="block">
+                            </td>
+                        </tr>
+                        {{-- <tr em="block">
                 <td align="center" valign="top" style="background: #ccd1ff;" bgcolor="#CCD1FF">
                     <div style="height: 60px; line-height: 60px; font-size: 8px;">&nbsp;</div>
                     <table cellpadding="0" cellspacing="0" border="0" width="80%"
@@ -569,12 +590,12 @@
   <![endif]-->
                 </td>
             </tr> --}}
-        </table>
-        <!--[</tr>if (gte mso 9)|(IE)]>
+                    </table>
+                    <!--[</tr>if (gte mso 9)|(IE)]>
     </td></tr></table>
     <![endif]-->
-        </td>
-        </tr>
+                </td>
+            </tr>
         </table>
 </body>
 

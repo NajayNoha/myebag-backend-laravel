@@ -10,6 +10,7 @@ use App\Models\OrderItem;
 use App\Models\UserAdress;
 use App\Models\OrderDetail;
 use App\Models\OrderStatus;
+use App\Mail\OrderStatusMail;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Models\PaymentDetail;
@@ -134,7 +135,7 @@ class OrderController extends Controller
                 'payment_details'=> $payment_details,
                 'order_url' => 'http://localhost:8080/orders'
             ];
-            // Mail::to($request->user()->email)->send(new OrdersMail($email_data));
+            Mail::to($request->user()->email)->send(new OrdersMail($email_data));
 
             return response()->json([
                 'status' => true,
@@ -191,7 +192,8 @@ class OrderController extends Controller
 
             if($order->save()){
                 $order = OrderDetail::with(['user', 'order_items' => ['product_variation.product.images'], 'payment_detail', 'order_status', 'order_status_user', 'shipping_address'])->where('id', $id)->first();
-
+                // send the orders state change email
+                Mail::to($order->user->email)->send(new OrderStatusMail($order));
                 return response()->json([
                     'status' => true,
                     'code' => 'SUCCESS',

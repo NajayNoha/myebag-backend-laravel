@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrdersMail extends Mailable
+class OrderStatusMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,9 +27,13 @@ class OrdersMail extends Mailable
 
     public function build()
     {
-        return $this->view('emails.orders.orderVerification')->with(
+        return $this->view('emails.orders.orderStatus')->with(
             [
-                'data' => $this->data
+                'data' => $this->data,
+                'user'=> $this->data->user,
+                'color'=> $this->data->order_status->background_color,
+                'status'=> $this->data->order_status->name,
+                'number'=> $this->data->id
             ]
         );
     }
