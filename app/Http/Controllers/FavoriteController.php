@@ -149,4 +149,45 @@ class OrderController extends Controller
             );
         }
     }
+    public function toggel_fav(Request $request, $id)
+    {
+        try {
+            $favorite = Favorite::where('product_id', '=', $id)
+            ->where('user_id', '=', $request->user()->id)->first();
+            if(!empty($favorite)){
+                $favorite = new Favorite();
+                $favorite->user_id = $request->user->id;
+                $favorite->product_id = $id;
+                $favorite->value = true;
+                if($favorite->save()){
+                    return response()->json([
+                        'status' => true,
+                        'code' => 'SUCCESS',
+                        'data' => [
+                            'favorite' => true
+                        ]
+                    ], 200);
+                }else {
+                    $favorite->delete();
+                    return response()->json([
+                        'status' => true,
+                        'code' => 'SUCCESS',
+                        'data' => [
+                            'favorite' => false
+                        ]
+                    ], 200);
+                }
+            }
+
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $th->getMessage(),
+                    'code' => 'SERVER_ERROR'
+                ],
+                500
+            );
+        }
+    }
 }
