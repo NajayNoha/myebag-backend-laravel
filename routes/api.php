@@ -1,28 +1,29 @@
 <?php
 
-use App\Http\Controllers\AppController;
-use App\Http\Controllers\ColorController;
-use App\Http\Controllers\SizeController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DiscountController;
-// use App\Http\Controllers\GoogleController;
-use App\Http\Controllers\SignupController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\OptionController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderStatusController;
-use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\ReviewsController;
-use App\Http\Controllers\SliderController;
-use App\Http\Controllers\StripeController;
-use App\Http\Controllers\UserAdressController;
-use App\Http\Controllers\UserController;
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AppController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\SizeController;
+use App\Http\Controllers\UserController;
+// use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\ColorController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\OptionController;
+use App\Http\Controllers\SignupController;
+use App\Http\Controllers\SliderController;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\UserAdressController;
+use App\Http\Controllers\OrderStatusController;
+use App\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,3 +153,9 @@ Route::delete("/options/{id}", [OptionController::class, "destroy"]);
 Route::post('/sliders/{id}/active', [SliderController::class, 'setActive']);
 Route::post('/sliders', [SliderController::class, 'store']);
 Route::delete('/sliders/{id}', [SliderController::class, 'destroy']);
+
+
+
+//favorite routes
+Route::post('favorites/{id}', [FavoriteController::class, 'toggel_fav']);
+Route::post('favorites', [FavoriteController::class, 'index']);
