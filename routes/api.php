@@ -24,7 +24,6 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\UserAdressController;
 use App\Http\Controllers\OrderStatusController;
 use App\Http\Controllers\ResetPasswordController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -155,7 +154,6 @@ Route::post('/sliders', [SliderController::class, 'store']);
 Route::delete('/sliders/{id}', [SliderController::class, 'destroy']);
 
 
-
 //favorite routes
 Route::post('favorites/{id}', [FavoriteController::class, 'toggel_fav']);
-Route::post('favorites', [FavoriteController::class, 'index']);
+Route::get('favorites', [FavoriteController::class, 'index']);

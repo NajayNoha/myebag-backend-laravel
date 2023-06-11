@@ -28,6 +28,8 @@ class Product extends Model
         'has_colors' => 'boolean'
     ];
 
+    protected $appends = ['favorite'];
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
@@ -55,5 +57,9 @@ class Product extends Model
 
     public function size_type() {
         return $this->belongsTo(SizeType::class);
+    }
+
+    public function getFavoriteAttribute() {
+        return (auth()->check() && !!Favorite::where([['user_id', auth()->id()], ['product_id', $this->id]])->first());
     }
 }

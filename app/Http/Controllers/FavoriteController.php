@@ -8,7 +8,7 @@ use App\Models\Favorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class OrderController extends Controller
+class FavoriteController extends Controller
 {
     public function index()
     {
@@ -70,7 +70,6 @@ class OrderController extends Controller
                 $request->all(),
                 [
                     "product_id" => "required|exists:products,id",
-                    "user_id" => "required|exists:users,id",
                     "value" => "required"
                 ]
             );
@@ -154,9 +153,9 @@ class OrderController extends Controller
         try {
             $favorite = Favorite::where('product_id', '=', $id)
             ->where('user_id', '=', $request->user()->id)->first();
-            if(!empty($favorite)){
+            if(empty($favorite)){
                 $favorite = new Favorite();
-                $favorite->user_id = $request->user->id;
+                $favorite->user_id = $request->user()->id;
                 $favorite->product_id = $id;
                 $favorite->value = true;
                 if($favorite->save()){
@@ -167,17 +166,19 @@ class OrderController extends Controller
                             'favorite' => true
                         ]
                     ], 200);
-                }else {
-                    $favorite->delete();
-                    return response()->json([
-                        'status' => true,
-                        'code' => 'SUCCESS',
-                        'data' => [
-                            'favorite' => false
-                        ]
-                    ], 200);
                 }
             }
+            else {
+                $favorite->delete();
+                return response()->json([
+                    'status' => true,
+                    'code' => 'SUCCESS',
+                    'data' => [
+                        'favorite' => false
+                    ]
+                ], 200);
+            }
+
 
         } catch (\Throwable $th) {
             return response()->json(
