@@ -28,6 +28,8 @@ class Product extends Model
         'has_colors' => 'boolean'
     ];
 
+    protected $with = ['variations' => ['size', 'color'], 'images', 'category', 'size_type.sizes'];
+
     protected $appends = ['favorite'];
 
     public function category()

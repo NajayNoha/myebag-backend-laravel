@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserAdress;
 use App\Models\Favorite;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,12 +14,12 @@ class FavoriteController extends Controller
     public function index()
     {
         try {
-            $favorites = Favorite::all();
+            $favorites = Product::whereIn('id', Favorite::where('user_id', auth()->id())->get()->pluck('product_id'))->get();
             return response()->json([
                 'status' => true,
                 'code' => 'SUCCESS',
                 'data' => [
-                    'favorites' => $favorites
+                    'products' => $favorites
                 ]
             ], 200);
         } catch (\Throwable $th) {
